@@ -77,4 +77,21 @@ public class Range {
             System.out.println(getAdditionRange(range2).getTo());
         }
     }
+
+    public void printSubtraction(Range range2) {
+        if (to <= range2.from || range2.to <= from) {
+            System.out.println(from);
+            System.out.println(to);
+        } else if (from >= range2.from && to <= range2.to) {
+            System.out.println("null");
+        } else {
+            if (from >= range2.from) {
+                System.out.println(range2.to);
+                System.out.println(to);
+            } else if (to <= range2.to) {
+                System.out.println(from);
+                System.out.println(range2.from);
+            }
+        }
+    }
 }

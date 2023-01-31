@@ -10,68 +10,73 @@ public class Main {
         Range range1 = new Range(10, 30);
         Range range2 = new Range(31, 45);
 
-//        System.out.println("Введите начальное значение диапазона:");
-//        range.setFrom(scanner.nextDouble());
-//        System.out.println("Начальное значение диапазона: " + range.getFrom());
-//
-//        System.out.println("Введите конечное значение диапазона:");
-//        range.setTo(scanner.nextDouble());
-//        System.out.println("Конечное значение диапазона: " + range.getTo());
-//
-//        System.out.println("Длина диапазона: " + range.getRange());
-//
-//        System.out.println("Введите число для проверки вхождения в заданный диапазон:");
-//        double numberToCheck = scanner.nextDouble();
-//
-//        if (range.isInside(numberToCheck)) {
-//            System.out.println("Число входит в диапазон");
-//        } else {
-//            System.out.println("Число не входит в диапазон");
-//        }
-// Пересечение:
-//        System.out.println(range1.getIntersectionWith(range2));
-//        System.out.println();
-//
-//        range2.setFrom(0);
-//        range2.setTo(5);
-//        System.out.println(range1.getIntersectionWith(range2));
-//        System.out.println();
-//
-//        range2.setFrom(30);
-//        range2.setTo(45);
-//        System.out.println(range1.getIntersectionWith(range2));
-//        System.out.println();
-//
-//        range2.setFrom(29);
-//        range2.setTo(45);
-//        System.out.println(range1.getIntersectionWith(range2).getFrom());
-//        System.out.println(range1.getIntersectionWith(range2).getTo());
-//        System.out.println();
-//
-//        range2.setFrom(20);
-//        range2.setTo(30);
-//        System.out.println(range1.getIntersectionWith(range2).getFrom());
-//        System.out.println(range1.getIntersectionWith(range2).getTo());
-//        System.out.println();
-//
-//        range2.setFrom(15);
-//        range2.setTo(25);
-//        System.out.println(range1.getIntersectionWith(range2).getFrom());
-//        System.out.println(range1.getIntersectionWith(range2).getTo());
-//        System.out.println();
-//
-//        range2.setFrom(10);
-//        range2.setTo(25);
-//        System.out.println(range1.getIntersectionWith(range2).getFrom());
-//        System.out.println(range1.getIntersectionWith(range2).getTo());
-//        System.out.println();
-//
-//        range2.setFrom(10);
-//        range2.setTo(30);
-//        System.out.println(range1.getIntersectionWith(range2).getFrom());
-//        System.out.println(range1.getIntersectionWith(range2).getTo());
-//        System.out.println();
-// сложение:
+        System.out.println("Введите начальное значение диапазона:");
+        range1.setFrom(scanner.nextDouble());
+        System.out.println("Начальное значение диапазона: " + range1.getFrom());
+
+        System.out.println("Введите конечное значение диапазона:");
+        range1.setTo(scanner.nextDouble());
+        System.out.println("Конечное значение диапазона: " + range1.getTo());
+
+        System.out.println("Длина диапазона: " + range1.getRange());
+
+        System.out.println("Введите число для проверки вхождения в заданный диапазон:");
+        double numberToCheck = scanner.nextDouble();
+
+        if (range1.isInside(numberToCheck)) {
+            System.out.println("Число входит в диапазон");
+        } else {
+            System.out.println("Число не входит в диапазон");
+        }
+
+        System.out.println("Пересечение:");
+        range1.setFrom(10);
+        range1.setTo(30);
+        System.out.println(range1.getIntersectionWith(range2));
+        System.out.println();
+
+        range2.setFrom(0);
+        range2.setTo(5);
+        System.out.println(range1.getIntersectionWith(range2));
+        System.out.println();
+
+        range2.setFrom(30);
+        range2.setTo(45);
+        System.out.println(range1.getIntersectionWith(range2));
+        System.out.println();
+
+        range2.setFrom(29);
+        range2.setTo(45);
+        System.out.println(range1.getIntersectionWith(range2).getFrom());
+        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println();
+
+        range2.setFrom(20);
+        range2.setTo(30);
+        System.out.println(range1.getIntersectionWith(range2).getFrom());
+        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println();
+
+        range2.setFrom(15);
+        range2.setTo(25);
+        System.out.println(range1.getIntersectionWith(range2).getFrom());
+        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println();
+
+        range2.setFrom(10);
+        range2.setTo(25);
+        System.out.println(range1.getIntersectionWith(range2).getFrom());
+        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println();
+
+        range2.setFrom(10);
+        range2.setTo(30);
+        System.out.println(range1.getIntersectionWith(range2).getFrom());
+        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println();
+        System.out.println("Cложение:");
+        range1.setFrom(10);
+        range1.setTo(30);
         range1.printAddition(range2);
         System.out.println();
 
@@ -101,5 +106,26 @@ public class Main {
         range1.setTo(0);
         range1.printAddition(range2);
         System.out.println();
+        System.out.println("Вычитание:");
+        range1.setFrom(10);
+        range1.setTo(30);
+        range1.printSubtraction(range2);
+        System.out.println();
+
+        range2.setFrom(10);
+        range2.setTo(30);
+        range1.printSubtraction(range2);
+        System.out.println();
+
+        range2.setFrom(20);
+        range2.setTo(45);
+        range1.printSubtraction(range2);
+        System.out.println();
+
+        range2.setFrom(0);
+        range2.setTo(15);
+        range1.printSubtraction(range2);
+        System.out.println();
+
     }
 }
