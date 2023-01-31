@@ -1,5 +1,7 @@
 package ru.academits.kozhevnikov.range;
 
+import java.util.Arrays;
+
 public class Range {
     private double from;
     private double to;
@@ -47,5 +49,32 @@ public class Range {
         }
 
         return new Range(from, to);
+    }
+
+    public Range[] getAdditionArray(Range range2) {
+        return new Range[]{new Range(from, to), range2};
+    }
+
+    public Range getAdditionRange(Range range2) {
+        return new Range(Math.min(from, range2.from), Math.max(to, range2.to));
+    }
+
+    public double getAdditionNumber(Range range2) {
+        if (to == range2.from) {
+            return to;
+        }
+
+        return from;
+    }
+
+    public void printAddition(Range range2) {
+        if (to < range2.from || range2.to < from) {
+            System.out.println(Arrays.toString(getAdditionArray(range2)));
+        } else if (to == from && range2.to == range2.from && to == range2.to) {
+            System.out.println(getAdditionNumber(range2));
+        } else {
+            System.out.println(getAdditionRange(range2).getFrom());
+            System.out.println(getAdditionRange(range2).getTo());
+        }
     }
 }
