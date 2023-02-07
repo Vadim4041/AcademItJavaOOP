@@ -50,14 +50,18 @@ public class Range {
     }
 
     public static String toString(Range[] ranges) {
-        if (ranges == null)
+        if (ranges == null) {
             return "null";
+        }
 
         int iMax = ranges.length - 1;
-        if (iMax == -1)
+
+        if (iMax == -1) {
             return "[]";
+        }
 
         StringBuilder b = new StringBuilder();
+
         b.append('[');
 
         for (int i = 0; ; i++) {

@@ -74,6 +74,7 @@ public class Main {
         System.out.println(range1.getIntersection(range2).getFrom());
         System.out.println(range1.getIntersection(range2).getTo());
         System.out.println();
+
         System.out.println("Cложение:");
         range1.setFrom(10);
         range1.setTo(30);
