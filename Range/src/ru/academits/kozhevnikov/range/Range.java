@@ -1,7 +1,5 @@
 package ru.academits.kozhevnikov.range;
 
-import java.util.Arrays;
-
 public class Range {
     private double from;
     private double to;
@@ -27,7 +25,7 @@ public class Range {
         this.to = to;
     }
 
-    public double getRange() {
+    public double getBoundaryDifference() {
         return to - from;
     }
 
@@ -35,63 +33,63 @@ public class Range {
         return numberToCheck >= from && numberToCheck <= to;
     }
 
-    public Range getIntersectionWith(Range range2) {
-        if (to <= range2.from || range2.to <= from) {
+    public Range getIntersection(Range range) {
+        if (to <= range.from || range.to <= from) {
             return null;
         }
 
-        if (to <= range2.to && from <= range2.from) {
-            return new Range(range2.from, to);
-        }
-
-        if (from <= range2.from) {
-            return range2;
-        }
-
-        return new Range(from, to);
+        return new Range(Math.max(from, range.from), Math.min(to, range.to));
     }
 
-    public Range[] getAdditionArray(Range range2) {
-        return new Range[]{new Range(from, to), range2};
-    }
-
-    public Range getAdditionRange(Range range2) {
-        return new Range(Math.min(from, range2.from), Math.max(to, range2.to));
-    }
-
-    public double getAdditionNumber(Range range2) {
-        if (to == range2.from) {
-            return to;
-        }
-
-        return from;
-    }
-
-    public void printAddition(Range range2) {
+    public Range[] getUnion(Range range2) {
         if (to < range2.from || range2.to < from) {
-            System.out.println(Arrays.toString(getAdditionArray(range2)));
-        } else if (to == from && range2.to == range2.from && to == range2.to) {
-            System.out.println(getAdditionNumber(range2));
-        } else {
-            System.out.println(getAdditionRange(range2).getFrom());
-            System.out.println(getAdditionRange(range2).getTo());
+            return new Range[]{new Range(from, to), new Range(range2.from, range2.to)};
+        }
+
+        return new Range[]{new Range(Math.min(from, range2.from), Math.max(to, range2.to))};
+    }
+
+    public static String toString(Range[] ranges) {
+        if (ranges == null)
+            return "null";
+
+        int iMax = ranges.length - 1;
+        if (iMax == -1)
+            return "[]";
+
+        StringBuilder b = new StringBuilder();
+        b.append('[');
+
+        for (int i = 0; ; i++) {
+            b.append(ranges[i].from);
+            b.append(", ");
+            b.append(ranges[i].to);
+
+            if (i == iMax) {
+                return b.append(']').toString();
+            }
+
+            b.append("; ");
         }
     }
 
-    public void printSubtraction(Range range2) {
-        if (to <= range2.from || range2.to <= from) {
-            System.out.println(from);
-            System.out.println(to);
-        } else if (from >= range2.from && to <= range2.to) {
-            System.out.println("null");
-        } else {
-            if (from >= range2.from) {
-                System.out.println(range2.to);
-                System.out.println(to);
-            } else if (to <= range2.to) {
-                System.out.println(from);
-                System.out.println(range2.from);
-            }
+    public Range[] getSubtraction(Range range) {
+        if (from >= range.from && to <= range.to) {
+            return null;
         }
+
+        if (to <= range.from || range.to <= from) {
+            return new Range[]{new Range(from, to)};
+        }
+
+        if (from >= range.from) {
+            return new Range[]{new Range(range.to, to)};
+        }
+
+        if (to <= range.to) {
+            return new Range[]{new Range(from, range.from)};
+        }
+
+        return new Range[]{new Range(from, range.from), new Range(range.to, to)};
     }
 }

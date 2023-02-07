@@ -18,7 +18,7 @@ public class Main {
         range1.setTo(scanner.nextDouble());
         System.out.println("Конечное значение диапазона: " + range1.getTo());
 
-        System.out.println("Длина диапазона: " + range1.getRange());
+        System.out.println("Длина диапазона: " + range1.getBoundaryDifference());
 
         System.out.println("Введите число для проверки вхождения в заданный диапазон:");
         double numberToCheck = scanner.nextDouble();
@@ -32,100 +32,110 @@ public class Main {
         System.out.println("Пересечение:");
         range1.setFrom(10);
         range1.setTo(30);
-        System.out.println(range1.getIntersectionWith(range2));
+        System.out.println(range1.getIntersection(range2));
         System.out.println();
 
         range2.setFrom(0);
         range2.setTo(5);
-        System.out.println(range1.getIntersectionWith(range2));
+        System.out.println(range1.getIntersection(range2));
         System.out.println();
 
         range2.setFrom(30);
         range2.setTo(45);
-        System.out.println(range1.getIntersectionWith(range2));
+        System.out.println(range1.getIntersection(range2));
         System.out.println();
 
         range2.setFrom(29);
         range2.setTo(45);
-        System.out.println(range1.getIntersectionWith(range2).getFrom());
-        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println(range1.getIntersection(range2).getFrom());
+        System.out.println(range1.getIntersection(range2).getTo());
         System.out.println();
 
         range2.setFrom(20);
         range2.setTo(30);
-        System.out.println(range1.getIntersectionWith(range2).getFrom());
-        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println(range1.getIntersection(range2).getFrom());
+        System.out.println(range1.getIntersection(range2).getTo());
         System.out.println();
 
         range2.setFrom(15);
         range2.setTo(25);
-        System.out.println(range1.getIntersectionWith(range2).getFrom());
-        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println(range1.getIntersection(range2).getFrom());
+        System.out.println(range1.getIntersection(range2).getTo());
         System.out.println();
 
         range2.setFrom(10);
         range2.setTo(25);
-        System.out.println(range1.getIntersectionWith(range2).getFrom());
-        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println(range1.getIntersection(range2).getFrom());
+        System.out.println(range1.getIntersection(range2).getTo());
         System.out.println();
 
         range2.setFrom(10);
         range2.setTo(30);
-        System.out.println(range1.getIntersectionWith(range2).getFrom());
-        System.out.println(range1.getIntersectionWith(range2).getTo());
+        System.out.println(range1.getIntersection(range2).getFrom());
+        System.out.println(range1.getIntersection(range2).getTo());
         System.out.println();
         System.out.println("Cложение:");
         range1.setFrom(10);
         range1.setTo(30);
-        range1.printAddition(range2);
+        System.out.println(Range.toString(range1.getUnion(range2)));
         System.out.println();
 
         range2.setFrom(30);
         range2.setTo(45);
-        range1.printAddition(range2);
+        System.out.println(Range.toString(range1.getUnion(range2)));
         System.out.println();
 
         range2.setFrom(29);
         range2.setTo(45);
-        range1.printAddition(range2);
+        System.out.println(Range.toString(range1.getUnion(range2)));
         System.out.println();
 
         range2.setFrom(10);
         range2.setTo(30);
-        range1.printAddition(range2);
+        System.out.println(Range.toString(range1.getUnion(range2)));
         System.out.println();
 
         range2.setFrom(0);
         range2.setTo(10);
-        range1.printAddition(range2);
+        System.out.println(Range.toString(range1.getUnion(range2)));
+        System.out.println();
+
+        range2.setFrom(0);
+        range2.setTo(5);
+        System.out.println(Range.toString(range1.getUnion(range2)));
         System.out.println();
 
         range2.setFrom(0);
         range2.setTo(0);
         range1.setFrom(0);
         range1.setTo(0);
-        range1.printAddition(range2);
+        System.out.println(Range.toString(range1.getUnion(range2)));
         System.out.println();
+
         System.out.println("Вычитание:");
         range1.setFrom(10);
         range1.setTo(30);
-        range1.printSubtraction(range2);
+        System.out.println(Range.toString(range1.getSubtraction(range2)));
         System.out.println();
 
         range2.setFrom(10);
         range2.setTo(30);
-        range1.printSubtraction(range2);
+        System.out.println(Range.toString(range1.getSubtraction(range2)));
         System.out.println();
 
         range2.setFrom(20);
         range2.setTo(45);
-        range1.printSubtraction(range2);
+        System.out.println(Range.toString(range1.getSubtraction(range2)));
         System.out.println();
 
         range2.setFrom(0);
         range2.setTo(15);
-        range1.printSubtraction(range2);
+        System.out.println(Range.toString(range1.getSubtraction(range2)));
         System.out.println();
 
+        range2.setFrom(0);
+        range2.setTo(5);
+        System.out.println(Range.toString(range1.getSubtraction(range2)));
+        System.out.println();
     }
 }
