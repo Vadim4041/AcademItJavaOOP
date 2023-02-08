@@ -1,6 +1,5 @@
 package ru.academits.kozhevnikov.shapes_main;
 
-
 import ru.academits.kozhevnikov.shapes.*;
 
 public class Main {
@@ -8,7 +7,7 @@ public class Main {
         Shape square = new Square(5);
         Shape rectangle = new Rectangle(5, 2);
         Shape circle = new Circle(5);
-        Shape triangle = new Triangle(0,0, 5, 0, 0, 6);
+        Shape triangle = new Triangle(0, 0, 5, 0, 0, 6);
 
         System.out.println(square.getArea());
         System.out.println(square.getPerimeter());

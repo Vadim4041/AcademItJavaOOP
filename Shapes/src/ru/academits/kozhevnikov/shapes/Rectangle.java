@@ -1,11 +1,10 @@
 package ru.academits.kozhevnikov.shapes;
 
-public class Rectangle extends Shape {
+public class Rectangle implements Shape {
     private final double width;
     private final double height;
 
     public Rectangle(double width, double height) {
-        super(width, height);
         this.width = width;
         this.height = height;
     }

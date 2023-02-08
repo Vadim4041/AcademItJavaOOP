@@ -1,10 +1,9 @@
 package ru.academits.kozhevnikov.shapes;
 
-public class Square extends Shape {
+public class Square implements Shape {
     private final double squareSide;
 
     public Square(double squareSide) {
-        super(squareSide);
         this.squareSide = squareSide;
     }
 
