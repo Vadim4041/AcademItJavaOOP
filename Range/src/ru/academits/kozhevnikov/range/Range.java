@@ -41,12 +41,12 @@ public class Range {
         return new Range(Math.max(from, range.from), Math.min(to, range.to));
     }
 
-    public Range[] getUnion(Range range2) {
-        if (to < range2.from || range2.to < from) {
-            return new Range[]{new Range(from, to), new Range(range2.from, range2.to)};
+    public Range[] getUnion(Range range) {
+        if (to < range.from || range.to < from) {
+            return new Range[]{new Range(from, to), new Range(range.from, range.to)};
         }
 
-        return new Range[]{new Range(Math.min(from, range2.from), Math.max(to, range2.to))};
+        return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
     }
 
     public static String toString(Range[] ranges) {
