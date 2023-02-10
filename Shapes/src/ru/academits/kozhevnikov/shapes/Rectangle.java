@@ -24,4 +24,31 @@ public class Rectangle implements Shape {
     public double getHeight() {
         return height;
     }
+
+    @Override
+    public String toString() {
+        return "Характеристики выбранного прямоугольника:" + System.lineSeparator()
+                + "Ширина: " + getWidth() + System.lineSeparator()
+                + "Высота: " + getHeight() + System.lineSeparator()
+                + "Площадь: " + getArea() + System.lineSeparator()
+                + "Периметр: " + getPerimeter() + System.lineSeparator();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+        hash = (int) (prime * hash + width + height);
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object shape) {
+        if (!(shape instanceof Rectangle)) {
+            return false;
+        }
+
+        return (shape == this) || (width == ((Rectangle) shape).width && height == ((Rectangle) shape).height);
+    }
 }

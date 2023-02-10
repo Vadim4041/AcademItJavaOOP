@@ -22,4 +22,31 @@ public class Circle implements Shape {
     public double getHeight() {
         return radius * 2;
     }
+
+    @Override
+    public String toString() {
+        return "Характеристики выбранного круга:" + System.lineSeparator()
+                + "Ширина: " + getWidth() + System.lineSeparator()
+                + "Высота: " + getHeight() + System.lineSeparator()
+                + "Площадь: " + getArea() + System.lineSeparator()
+                + "Периметр: " + getPerimeter() + System.lineSeparator();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+        hash = (int) (prime * hash + radius);
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object shape) {
+        if (!(shape instanceof Circle)) {
+            return false;
+        }
+
+        return (shape == this) || (radius == ((Circle) shape).radius);
+    }
 }

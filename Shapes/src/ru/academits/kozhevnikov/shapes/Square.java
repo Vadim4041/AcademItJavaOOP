@@ -22,4 +22,31 @@ public class Square implements Shape {
     public double getHeight() {
         return squareSide;
     }
+
+    @Override
+    public String toString() {
+        return "Характеристики выбранного квадрата:" + System.lineSeparator()
+                + "Ширина: " + getWidth() + System.lineSeparator()
+                + "Высота: " + getHeight() + System.lineSeparator()
+                + "Площадь: " + getArea() + System.lineSeparator()
+                + "Периметр: " + getPerimeter() + System.lineSeparator();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+        hash = (int) (prime * hash + squareSide);
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object shape) {
+        if (!(shape instanceof Square)) {
+            return false;
+        }
+
+        return (shape == this) || (squareSide == ((Square) shape).squareSide);
+    }
 }

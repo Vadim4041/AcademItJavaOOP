@@ -36,4 +36,36 @@ public class Triangle implements Shape {
     public double getHeight() {
         return Math.max(Math.max(y1, y2), y3) - Math.min(Math.min(y1, y2), y3);
     }
+
+    @Override
+    public String toString() {
+        return "Характеристики выбранного треугольника:" + System.lineSeparator()
+                + "Ширина: " + getWidth() + System.lineSeparator()
+                + "Высота: " + getHeight() + System.lineSeparator()
+                + "Площадь: " + getArea() + System.lineSeparator()
+                + "Периметр: " + getPerimeter() + System.lineSeparator();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+        hash = (int) (prime * hash + x1 + x2 + x3 + y1 + y2 + y3);
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object shape) {
+        if (!(shape instanceof Triangle)) {
+            return false;
+        }
+
+        return (shape == this) || (x1 == ((Triangle) shape).x1
+                && x2 == ((Triangle) shape).x2
+                && x3 == ((Triangle) shape).x3
+                && y1 == ((Triangle) shape).y1
+                && y2 == ((Triangle) shape).y2
+                && y3 == ((Triangle) shape).y3);
+    }
 }
