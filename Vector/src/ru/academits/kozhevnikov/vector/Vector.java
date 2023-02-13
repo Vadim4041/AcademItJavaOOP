@@ -7,9 +7,9 @@ public class Vector {
 
     private double[] array;
 
-    public Vector(int length) throws IllegalArgumentException {
+    public Vector(int length) {
         if (length <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Длина должна быть больше нуля");
         }
 
         this.length = length;
@@ -26,9 +26,9 @@ public class Vector {
         length = array.length;
     }
 
-    public Vector(int length, double[] array1) throws IllegalArgumentException {
+    public Vector(int length, double[] array1) {
         if (length <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Длина должна быть больше нуля");
         }
 
         this.length = length;
