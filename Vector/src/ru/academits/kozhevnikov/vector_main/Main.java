@@ -15,7 +15,6 @@ public class Main {
         Vector vector1 = new Vector(vector);
         Vector vector2 = new Vector(new double[]{1, 2, 3});
 
-
         System.out.println(vector.getSize());
         System.out.println(vector1);
 

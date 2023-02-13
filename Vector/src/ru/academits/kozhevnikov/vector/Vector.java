@@ -7,7 +7,11 @@ public class Vector {
 
     private double[] array;
 
-    public Vector(int length) {
+    public Vector(int length) throws IllegalArgumentException {
+        if (length <= 0) {
+            throw new IllegalArgumentException();
+        }
+
         this.length = length;
         array = new double[length];
     }
@@ -22,7 +26,11 @@ public class Vector {
         length = array.length;
     }
 
-    public Vector(int length, double[] array1) {
+    public Vector(int length, double[] array1) throws IllegalArgumentException {
+        if (length <= 0) {
+            throw new IllegalArgumentException();
+        }
+
         this.length = length;
 
         if (array1.length < length) {
