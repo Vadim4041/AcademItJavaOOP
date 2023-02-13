@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/AcademItJavaOOP.iml" filepath="$PROJECT_DIR$/.idea/AcademItJavaOOP.iml" />
       <module fileurl="file://$PROJECT_DIR$/Range/Range.iml" filepath="$PROJECT_DIR$/Range/Range.iml" />
       <module fileurl="file://$PROJECT_DIR$/Shapes/Shapes.iml" filepath="$PROJECT_DIR$/Shapes/Shapes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Vector/Vector.iml" filepath="$PROJECT_DIR$/Vector/Vector.iml" />
     </modules>
   </component>
 </project>
