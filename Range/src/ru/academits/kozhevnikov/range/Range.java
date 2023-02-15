@@ -25,7 +25,7 @@ public class Range {
         this.to = to;
     }
 
-    public double getBoundaryDifference() {
+    public double getLength() {
         return to - from;
     }
 
@@ -35,7 +35,7 @@ public class Range {
 
     public Range getIntersection(Range range) {
         if (to <= range.from || range.to <= from) {
-            return null;
+            return new Range(0, 0);
         }
 
         return new Range(Math.max(from, range.from), Math.min(to, range.to));
@@ -49,37 +49,14 @@ public class Range {
         return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
     }
 
-    public static String toString(Range[] ranges) {
-        if (ranges == null) {
-            return "null";
-        }
-
-        int iMax = ranges.length - 1;
-
-        if (iMax == -1) {
-            return "[]";
-        }
-
-        StringBuilder b = new StringBuilder();
-
-        b.append('[');
-
-        for (int i = 0; ; i++) {
-            b.append(ranges[i].from);
-            b.append(", ");
-            b.append(ranges[i].to);
-
-            if (i == iMax) {
-                return b.append(']').toString();
-            }
-
-            b.append("; ");
-        }
+    @Override
+    public String toString() {
+        return "(" + from + ", " + to + ")";
     }
 
-    public Range[] getSubtraction(Range range) {
+    public Range[] getDifference(Range range) {
         if (from >= range.from && to <= range.to) {
-            return null;
+            return new Range[0];
         }
 
         if (to <= range.from || range.to <= from) {
