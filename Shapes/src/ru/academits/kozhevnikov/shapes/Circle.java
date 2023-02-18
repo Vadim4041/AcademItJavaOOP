@@ -23,30 +23,37 @@ public class Circle implements Shape {
         return radius * 2;
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
     @Override
     public String toString() {
-        return "Характеристики выбранного круга:" + System.lineSeparator()
-                + "Ширина: " + getWidth() + System.lineSeparator()
-                + "Высота: " + getHeight() + System.lineSeparator()
-                + "Площадь: " + getArea() + System.lineSeparator()
-                + "Периметр: " + getPerimeter() + System.lineSeparator();
+        return String.format("Круг: радиус: %.2f, площадь: %.2f, периметр: %.2f.",
+                radius, getArea(), getPerimeter());
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = (int) (prime * hash + radius);
+        hash = prime * hash + Double.hashCode(radius);
 
         return hash;
     }
 
     @Override
-    public boolean equals(Object shape) {
-        if (!(shape instanceof Circle)) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
 
-        return (shape == this) || (radius == ((Circle) shape).radius);
+        Circle circle = (Circle) obj;
+
+        return radius == circle.radius;
     }
 }

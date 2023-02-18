@@ -1,13 +1,15 @@
 package ru.academits.kozhevnikov.shapes_main;
 
 import ru.academits.kozhevnikov.shapes.*;
+import ru.academits.kozhevnikov.shapes.comparators.AreaComparator;
+import ru.academits.kozhevnikov.shapes.comparators.PerimeterComparator;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Shape[] shapes = new Shape[]{
-                new Square(5),
+        Shape[] shapes = {
+                new Square(50),
                 new Square(4.99),
                 new Square(4.99),
                 new Rectangle(5, 2),
@@ -22,7 +24,6 @@ public class Main {
                 new Triangle(0, 0, 9, 0, 0, 2),
         };
 
-
         System.out.println(shapes[5]);
         System.out.println(shapes[1].equals(shapes[2]));
         System.out.println(shapes[3].equals(shapes[4]));
@@ -35,7 +36,7 @@ public class Main {
         System.out.println(shapes[3].hashCode());
         System.out.println(shapes[8].hashCode());
 
-        Arrays.sort(shapes, new SortByArea());
+        Arrays.sort(shapes, new AreaComparator());
 
         System.out.println("Характеристики фигуры с максимальной площадью:");
         System.out.println("Ширина: " + shapes[0].getWidth());
@@ -45,7 +46,7 @@ public class Main {
 
         System.out.println();
 
-        Arrays.sort(shapes, new SortByPerimeter());
+        Arrays.sort(shapes, new PerimeterComparator());
 
         System.out.println("Характеристики фигуры со вторым по величине периметром:");
         System.out.println("Ширина: " + shapes[1].getWidth());

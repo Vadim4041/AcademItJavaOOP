@@ -8,10 +8,4 @@ public interface Shape {
     double getWidth();
 
     double getHeight();
-
-    String toString();
-
-    boolean equals(Object shape);
-
-    int hashCode();
 }

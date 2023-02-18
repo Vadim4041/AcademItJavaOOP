@@ -17,16 +17,40 @@ public class Triangle implements Shape {
         this.y3 = y3;
     }
 
+    public double getX1() {
+        return x1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public double getY3() {
+        return y3;
+    }
+
     public double getArea() {
         return 0.5 * Math.abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
     }
 
     public double getPerimeter() {
-        double length12 = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-        double length23 = Math.sqrt(Math.pow(x2 - x3, 2) + Math.pow(y2 - y3, 2));
-        double length31 = Math.sqrt(Math.pow(x1 - x3, 2) + Math.pow(y1 - y3, 2));
+        return getSideLength(x1, y1, x2, y2) + getSideLength(x2, y2, x3, y3) + getSideLength(x1, y3, x1, y3);
+    }
 
-        return length12 + length23 + length31;
+    private double getSideLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
     public double getWidth() {
@@ -39,33 +63,42 @@ public class Triangle implements Shape {
 
     @Override
     public String toString() {
-        return "Характеристики выбранного треугольника:" + System.lineSeparator()
-                + "Ширина: " + getWidth() + System.lineSeparator()
-                + "Высота: " + getHeight() + System.lineSeparator()
-                + "Площадь: " + getArea() + System.lineSeparator()
-                + "Периметр: " + getPerimeter() + System.lineSeparator();
+        return String.format("Треугольник: координаты вершин:  (%.2f; %.2f), (%.2f; %.2f), (%.2f; %.2f)," +
+                        " площадь: %.2f, периметр: %.2f.",
+                x1, y1, x2, y2, x3, y3, getArea(), getPerimeter());
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = (int) (prime * hash + x1 + x2 + x3 + y1 + y2 + y3);
+        hash = prime * hash + Double.hashCode(x1);
+        hash = prime * hash + Double.hashCode(x2);
+        hash = prime * hash + Double.hashCode(x3);
+        hash = prime * hash + Double.hashCode(y1);
+        hash = prime * hash + Double.hashCode(y2);
+        hash = prime * hash + Double.hashCode(y3);
 
         return hash;
     }
 
     @Override
-    public boolean equals(Object shape) {
-        if (!(shape instanceof Triangle)) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
 
-        return (shape == this) || (x1 == ((Triangle) shape).x1
-                && x2 == ((Triangle) shape).x2
-                && x3 == ((Triangle) shape).x3
-                && y1 == ((Triangle) shape).y1
-                && y2 == ((Triangle) shape).y2
-                && y3 == ((Triangle) shape).y3);
+        Triangle triangle = (Triangle) obj;
+
+        return x1 == triangle.x1
+                && x2 == triangle.x2
+                && x3 == triangle.x3
+                && y1 == triangle.y1
+                && y2 == triangle.y2
+                && y3 == triangle.y3;
     }
 }

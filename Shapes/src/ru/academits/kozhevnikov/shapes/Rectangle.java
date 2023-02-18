@@ -27,28 +27,32 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "Характеристики выбранного прямоугольника:" + System.lineSeparator()
-                + "Ширина: " + getWidth() + System.lineSeparator()
-                + "Высота: " + getHeight() + System.lineSeparator()
-                + "Площадь: " + getArea() + System.lineSeparator()
-                + "Периметр: " + getPerimeter() + System.lineSeparator();
+        return String.format("Прямоугольник: ширина: %.2f, высота: %.2f, площадь: %.2f, периметр: %.2f.",
+                width, height, getArea(), getPerimeter());
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = (int) (prime * hash + width + height);
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
 
         return hash;
     }
 
     @Override
-    public boolean equals(Object shape) {
-        if (!(shape instanceof Rectangle)) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
 
-        return (shape == this) || (width == ((Rectangle) shape).width && height == ((Rectangle) shape).height);
+        Rectangle rectangle = (Rectangle) obj;
+
+        return width == rectangle.width && height == rectangle.height;
     }
 }
