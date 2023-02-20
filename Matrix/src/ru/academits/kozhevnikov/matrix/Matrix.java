@@ -1,6 +1,5 @@
 package ru.academits.kozhevnikov.matrix;
 
-import ru.academits.kozhevnikov.matrix_main.TestGPT;
 import ru.academits.kozhevnikov.vector.Vector;
 
 public class Matrix {
@@ -71,33 +70,25 @@ public class Matrix {
 
     @Override
     public String toString() {
-        int jMax = vectors[0].getSize() - 1;
-        int iMax = vectors.length - 1;
-
         StringBuilder b = new StringBuilder();
 
         b.append("{");
 
-        for (int i = 0; ; i++) {
+        for (Vector vector : vectors) {
             b.append("{");
 
-            for (int j = 0; ; j++) {
-                b.append(vectors[i].getComponent(j));
-
-                if (j == jMax) {
-                    b.append("}");
-                    break;
-                }
-
+            for (int j = 0; j < vector.getSize(); j++) {
+                b.append(vector.getComponent(j));
                 b.append(", ");
             }
 
-            if (i == iMax) {
-                return b.append("}").toString();
-            }
-
+            b.delete(b.length() - 2, b.length());
+            b.append("}");
             b.append(", ");
         }
+
+        b.delete(b.length() - 2, b.length());
+        return b.append("}").toString();
     }
 
     public int getSize() {
@@ -199,7 +190,7 @@ public class Matrix {
         }
 
         for (int i = 0; i < size; i++) {
-            setVectorRow(i, Vector.sumVectorsStatic(vectors[i], matrix.getVectorRow(i)));
+            setVectorRow(i, Vector.getSum(vectors[i], matrix.getVectorRow(i)));
         }
 
     }
@@ -210,7 +201,7 @@ public class Matrix {
         }
 
         for (int i = 0; i < size; i++) {
-            setVectorRow(i, Vector.subtractVectorsStatic(vectors[i], matrix.getVectorRow(i)));
+            setVectorRow(i, Vector.getDifference(vectors[i], matrix.getVectorRow(i)));
         }
     }
 
@@ -223,7 +214,7 @@ public class Matrix {
         Matrix result = new Matrix(size, size);
 
         for (int i = 0; i < size; i++) {
-            result.setVectorRow(i, Vector.sumVectorsStatic(matrix1.getVectorRow(i), matrix2.getVectorRow(i)));
+            result.setVectorRow(i, Vector.getSum(matrix1.getVectorRow(i), matrix2.getVectorRow(i)));
         }
 
         return result;
@@ -238,7 +229,7 @@ public class Matrix {
         Matrix result = new Matrix(size, size);
 
         for (int i = 0; i < size; i++) {
-            result.setVectorRow(i, Vector.subtractVectorsStatic(matrix1.getVectorRow(i), matrix2.getVectorRow(i)));
+            result.setVectorRow(i, Vector.getDifference(matrix1.getVectorRow(i), matrix2.getVectorRow(i)));
         }
 
         return result;
@@ -254,7 +245,9 @@ public class Matrix {
 
 
         for (int i = 0; i < size; i++) {
-            result.setVectorRow(i, Vector.multiplyVectorsStatic(matrix1.getVectorRow(i), matrix2.getVectorRow(i)));
+            for (int j = 0; j < size; j++) {
+                result.vectors[i].setComponent(j, Vector.getDotProduct(matrix1.getVectorRow(i), matrix2.getVectorColumn(j)));
+            }
         }
 
         return result;

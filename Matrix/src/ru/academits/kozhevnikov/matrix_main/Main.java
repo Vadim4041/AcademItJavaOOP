@@ -10,7 +10,7 @@ public class Main {
         Matrix matrix1 = new Matrix(3, 1);
         Matrix matrix2 = new Matrix(matrix1);
         Matrix matrix3 = new Matrix(new double[][]{{1, 2}, {4, 5, 6}, {7, 8}});
-        Matrix matrix4 = new Matrix(new Vector[]{new Vector(2), new Vector(new double[]{1, 2, 3}), new Vector(1)});
+        Matrix matrix4 = new Matrix(new Vector[]{new Vector(2), new Vector(new double[]{1, 2, 3}), new Vector(3)}); //new Vector[]{new Vector(2), new Vector(new double[]{1, 2, 3}), new Vector(3)}
 
         System.out.println(matrix1);
         System.out.println(matrix2);
