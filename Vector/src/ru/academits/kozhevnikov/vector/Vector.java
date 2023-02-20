@@ -26,7 +26,7 @@ public class Vector {
             throw new IllegalArgumentException(String.format("Размер введенного вектора равен %d. Размер вектора должна быть больше нуля", numbers.length));
         }
 
-        this.numbers = Arrays.copyOf(numbers, numbers.length + 1);
+        this.numbers = Arrays.copyOf(numbers, numbers.length);
     }
 
     public Vector(int size, double[] numbers) {
@@ -35,7 +35,7 @@ public class Vector {
         }
 
         if (numbers.length < size) {
-            this.numbers = Arrays.copyOf(numbers, numbers.length + 1);
+            this.numbers = Arrays.copyOf(numbers, size);
         } else {
             this.numbers = numbers;
         }
@@ -70,7 +70,7 @@ public class Vector {
         if (vector.getSize() != numbers.length) {
             double[] newArray = Arrays.copyOf(vector.numbers, Math.max(numbers.length, vector.getSize()));
 
-            for (int i = 0; i < newArray.length; i++) {
+            for (int i = 0; i < vector.getSize(); i++) {
                 newArray[i] += vector.numbers[i];
             }
 
@@ -86,7 +86,7 @@ public class Vector {
         if (vector.getSize() != numbers.length) {
             double[] newArray = Arrays.copyOf(vector.numbers, Math.max(numbers.length, vector.getSize()));
 
-            for (int i = 0; i < newArray.length; i++) {
+            for (int i = 0; i < vector.getSize(); i++) {
                 newArray[i] += vector.numbers[i];
             }
 
