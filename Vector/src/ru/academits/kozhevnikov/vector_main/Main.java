@@ -15,24 +15,27 @@ public class Main {
         Vector vector1 = new Vector(vector);
         Vector vector2 = new Vector(new double[]{1, 2, 3});
 
+        vector1.setComponent(2, 4);
+
         System.out.println(vector.getSize());
         System.out.println(vector1);
+        System.out.println(vector);
 
         System.out.println();
 
-        vector.addVector(vector1);
+        vector.add(vector1);
         System.out.println(vector);
         System.out.println(vector1);
 
         System.out.println();
 
-        vector.subtractVector(vector1);
+        vector.subtract(vector1);
         System.out.println(vector);
         System.out.println(vector1);
 
         System.out.println();
 
-        vector1.multiplyVector(5);
+        vector1.multiplyByNumber(5);
         System.out.println(vector);
         System.out.println(vector1);
 
@@ -69,8 +72,8 @@ public class Main {
 
         System.out.println();
 
-        System.out.println(sumVectorsStatic(vector, vector1));
-        System.out.println(subtractVectorsStatic(vector2, vector));
-        System.out.println(multiplyVectorsStatic(vector, vector1));
+        System.out.println(getSum(vector, vector1));
+        System.out.println(getDifference(vector2, vector));
+        System.out.println(getDotProduct(vector, vector1));
     }
 }
