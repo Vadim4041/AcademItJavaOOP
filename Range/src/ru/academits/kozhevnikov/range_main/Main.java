@@ -71,7 +71,7 @@ public class Main {
         System.out.println(range1.getIntersection(range2));
         System.out.println();
 
-        System.out.println("Cложение:");
+        System.out.println("Объединение:");
         range1.setFrom(10);
         range1.setTo(30);
         System.out.println(Arrays.toString(range1.getUnion(range2)));
