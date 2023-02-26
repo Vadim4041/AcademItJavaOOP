@@ -63,7 +63,7 @@ public class Triangle implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Треугольник: координаты вершин:  (%.2f; %.2f), (%.2f; %.2f), (%.2f; %.2f)," +
+        return String.format("Треугольник: координаты вершин: (%.2f; %.2f), (%.2f; %.2f), (%.2f; %.2f)," +
                         " площадь: %.2f, периметр: %.2f.",
                 x1, y1, x2, y2, x3, y3, getArea(), getPerimeter());
     }

@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Shape[] shapes = {
-                new Square(50),
+                new Square(500),
                 new Square(4.99),
                 new Square(4.99),
                 new Rectangle(5, 2),
@@ -39,19 +39,19 @@ public class Main {
         Arrays.sort(shapes, new AreaComparator());
 
         System.out.println("Характеристики фигуры с максимальной площадью:");
-        System.out.println("Ширина: " + shapes[0].getWidth());
-        System.out.println("Высота: " + shapes[0].getHeight());
-        System.out.println("Площадь: " + shapes[0].getArea());
-        System.out.println("Периметр: " + shapes[0].getPerimeter());
+        System.out.println("Ширина: " + shapes[shapes.length - 1].getWidth());
+        System.out.println("Высота: " + shapes[shapes.length - 1].getHeight());
+        System.out.println("Площадь: " + shapes[shapes.length - 1].getArea());
+        System.out.println("Периметр: " + shapes[shapes.length - 1].getPerimeter());
 
         System.out.println();
 
         Arrays.sort(shapes, new PerimeterComparator());
 
         System.out.println("Характеристики фигуры со вторым по величине периметром:");
-        System.out.println("Ширина: " + shapes[1].getWidth());
-        System.out.println("Высота: " + shapes[1].getHeight());
-        System.out.println("Площадь: " + shapes[1].getArea());
-        System.out.println("Периметр: " + shapes[1].getPerimeter());
+        System.out.println("Ширина: " + shapes[shapes.length - 2].getWidth());
+        System.out.println("Высота: " + shapes[shapes.length - 2].getHeight());
+        System.out.println("Площадь: " + shapes[shapes.length - 2].getArea());
+        System.out.println("Периметр: " + shapes[shapes.length - 2].getPerimeter());
     }
 }

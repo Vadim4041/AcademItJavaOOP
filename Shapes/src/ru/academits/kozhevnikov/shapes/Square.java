@@ -3,16 +3,8 @@ package ru.academits.kozhevnikov.shapes;
 public class Square implements Shape {
     private final double sideLength;
 
-    public Square(double squareSide) {
-        this.sideLength = squareSide;
-    }
-
-    public double getArea() {
-        return sideLength * sideLength;
-    }
-
-    public double getPerimeter() {
-        return sideLength * 4;
+    public Square(double sideLength) {
+        this.sideLength = sideLength;
     }
 
     public double getWidth() {
@@ -23,8 +15,16 @@ public class Square implements Shape {
         return sideLength;
     }
 
-    public double getSideLength() {
-        return sideLength;
+    public double getArea() {
+        return sideLength * sideLength;
+    }
+
+    public double getPerimeter() {
+        return sideLength * 4;
+    }
+
+    public static double getSideLength(Square square) {
+        return square.sideLength;
     }
 
     @Override
