@@ -41,7 +41,7 @@ public class Main {
 
         System.out.println();
 
-        vector1.reverseVector();
+        vector1.reverse();
         System.out.println(vector);
         System.out.println(vector1);
 

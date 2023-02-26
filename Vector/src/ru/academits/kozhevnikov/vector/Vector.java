@@ -3,124 +3,115 @@ package ru.academits.kozhevnikov.vector;
 import java.util.Arrays;
 
 public class Vector {
-    private double[] numbers;
+    private double[] components;
 
-    public Vector(int length) {
-        if (length <= 0) {
-            throw new IllegalArgumentException(String.format("Размер введенного вектора равен %d. Размер вектора должна быть больше нуля", length));
+    public Vector(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException(String.format("Введенный размер вектора равен %d. Размер вектора должен быть больше нуля", size));
         }
 
-        numbers = new double[length];
+        components = new double[size];
     }
 
     public Vector(Vector vector) {
-        this.numbers = new double[vector.getSize()];
+        this.components = new double[vector.components.length];
 
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = vector.getComponent(i);
-        }
+        System.arraycopy(vector.components, 0, components, 0, components.length);
     }
 
-    public Vector(double[] numbers) {
-        if (numbers.length <= 0) {
-            throw new IllegalArgumentException(String.format("Размер введенного вектора равен %d. Размер вектора должна быть больше нуля", numbers.length));
+    public Vector(double[] components) {
+        if (components.length <= 0) {
+            throw new IllegalArgumentException(String.format("Размер переданного массива вещественных чисел равен %d. Размер вектора должен быть больше нуля", components.length));
         }
 
-        this.numbers = Arrays.copyOf(numbers, numbers.length);
+        this.components = Arrays.copyOf(components, components.length);
     }
 
     public Vector(int size, double[] numbers) {
         if (size <= 0) {
-            throw new IllegalArgumentException(String.format("Размер введенного вектора равен %d. Размер вектора должна быть больше нуля", size));
+            throw new IllegalArgumentException(String.format("Введенный размер вектора равен %d. Размер вектора должна быть больше нуля", size));
         }
 
-        if (numbers.length < size) {
-            this.numbers = Arrays.copyOf(numbers, size);
-        } else {
-            this.numbers = numbers;
+        if (numbers.length <= 0) {
+            throw new IllegalArgumentException(String.format("Размер переданного массива вещественных чисел равен %d. Размер вектора должен быть больше нуля", numbers.length));
         }
 
+        this.components = Arrays.copyOf(numbers, size);
     }
 
     public int getSize() {
-        return numbers.length;
+        return components.length;
     }
 
     public double getLength() {
-        return Math.abs(numbers[numbers.length - 1] - numbers[0]);
+        double squaredComponentsSum = 0;
+
+        for (double e : components) {
+            squaredComponentsSum += Math.pow(e, 2);
+        }
+
+        return Math.sqrt(squaredComponentsSum);
     }
 
     @Override
     public String toString() {
-        StringBuilder b = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-        b.append("{");
+        sb.append("{");
 
-        for (double number : numbers) {
-            b.append(number);
-            b.append(", ");
+        for (double number : components) {
+            sb.append(number);
+            sb.append(", ");
         }
 
-        b.delete(b.lastIndexOf(", "), b.length());
+        sb.delete(sb.length() - 2, sb.length());
 
-        return b.append("}").toString();
+        return sb.append("}").toString();
     }
 
     public void add(Vector vector) {
-        if (vector.getSize() != numbers.length) {
-            double[] newArray = Arrays.copyOf(vector.numbers, Math.max(numbers.length, vector.getSize()));
+        if (vector.components.length > components.length) {
+            components = Arrays.copyOf(components, vector.components.length);
+        }
 
-            for (int i = 0; i < vector.getSize(); i++) {
-                newArray[i] += vector.numbers[i];
-            }
-
-            this.numbers = newArray;
-        } else {
-            for (int i = 0; i < numbers.length; i++) {
-                numbers[i] += vector.getComponent(i);
-            }
+        for (int i = 0; i < vector.components.length; i++) {
+            components[i] += vector.components[i];
         }
     }
 
     public void subtract(Vector vector) {
-        if (vector.getSize() != numbers.length) {
-            double[] newArray = Arrays.copyOf(vector.numbers, Math.max(numbers.length, vector.getSize()));
+        if (vector.components.length > components.length) {
+            components = Arrays.copyOf(components, vector.components.length);
+        }
 
-            for (int i = 0; i < vector.getSize(); i++) {
-                newArray[i] += vector.numbers[i];
-            }
-
-            this.numbers = newArray;
-        } else {
-            for (int i = 0; i < numbers.length; i++) {
-                numbers[i] -= vector.getComponent(i);
-            }
+        for (int i = 0; i < vector.components.length; i++) {
+            components[i] -= vector.components[i];
         }
     }
 
     public void multiplyByNumber(double multiplier) {
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] *= multiplier;
+        for (int i = 0; i < components.length; i++) {
+            components[i] *= multiplier;
         }
     }
 
-    public void reverseVector() {
+    public void reverse() {
         multiplyByNumber(-1);
     }
 
     public double getComponent(int index) {
-        return numbers[index];
+        return components[index];
     }
 
     public void setComponent(int index, double value) {
-        numbers[index] = value;
+        components[index] = value;
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = prime * hash + Arrays.hashCode(numbers);
+        hash = prime * hash + Arrays.hashCode(components);
 
         return hash;
     }
@@ -137,23 +128,30 @@ public class Vector {
 
         Vector vector = (Vector) obj;
 
-        return numbers == vector.numbers;
+        return Arrays.equals(components, vector.components);
     }
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        vector1.add(vector2);
+        Vector result = new Vector(vector1);
+        result.add(vector2);
 
-        return vector1;
+        return result;
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {
-        vector1.subtract(vector2);
+        Vector result = new Vector(vector1);
+        result.subtract(vector2);
 
-        return vector1;
+        return result;
     }
 
     public static double getDotProduct(Vector vector1, Vector vector2) {
-        return vector1.getLength() * vector2.getLength();
-    }
+        double result = 0;
 
+        for (int i = 0; i < Math.min(vector1.components.length, vector2.components.length); i++) {
+            result += vector1.components[i] * vector2.components[i];
+        }
+
+        return result;
+    }
 }
