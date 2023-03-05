@@ -2,10 +2,7 @@ package ru.academits.kozhevnikov.vector_main;
 
 import ru.academits.kozhevnikov.vector.Vector;
 
-import static ru.academits.kozhevnikov.vector.Vector.*;
-
 public class Main {
-
     public static void main(String[] args) {
         Vector vector = new Vector(5, new double[]{1, 2, 3});
 
@@ -72,8 +69,8 @@ public class Main {
 
         System.out.println();
 
-        System.out.println(getSum(vector, vector1));
-        System.out.println(getDifference(vector2, vector));
-        System.out.println(getDotProduct(vector, vector1));
+        System.out.println(Vector.getSum(vector, vector1));
+        System.out.println(Vector.getDifference(vector2, vector));
+        System.out.println(Vector.getDotProduct(vector, vector1));
     }
 }

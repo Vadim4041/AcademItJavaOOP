@@ -14,13 +14,11 @@ public class Vector {
     }
 
     public Vector(Vector vector) {
-        this.components = new double[vector.components.length];
-
-        System.arraycopy(vector.components, 0, components, 0, components.length);
+        components = Arrays.copyOf(vector.components, vector.components.length);
     }
 
     public Vector(double[] components) {
-        if (components.length <= 0) {
+        if (components.length == 0) {
             throw new IllegalArgumentException(String.format("Размер переданного массива вещественных чисел равен %d. Размер вектора должен быть больше нуля", components.length));
         }
 
@@ -28,15 +26,11 @@ public class Vector {
     }
 
     public Vector(int size, double[] numbers) {
-        if (size <= 0) {
+        if (size == 0) {
             throw new IllegalArgumentException(String.format("Введенный размер вектора равен %d. Размер вектора должна быть больше нуля", size));
         }
 
-        if (numbers.length <= 0) {
-            throw new IllegalArgumentException(String.format("Размер переданного массива вещественных чисел равен %d. Размер вектора должен быть больше нуля", numbers.length));
-        }
-
-        this.components = Arrays.copyOf(numbers, size);
+        components = Arrays.copyOf(numbers, size);
     }
 
     public int getSize() {
@@ -47,7 +41,7 @@ public class Vector {
         double squaredComponentsSum = 0;
 
         for (double e : components) {
-            squaredComponentsSum += Math.pow(e, 2);
+            squaredComponentsSum += e * e;
         }
 
         return Math.sqrt(squaredComponentsSum);
@@ -147,8 +141,9 @@ public class Vector {
 
     public static double getDotProduct(Vector vector1, Vector vector2) {
         double result = 0;
+        int minSize = Math.min(vector1.components.length, vector2.components.length);
 
-        for (int i = 0; i < Math.min(vector1.components.length, vector2.components.length); i++) {
+        for (int i = 0; i < minSize; i++) {
             result += vector1.components[i] * vector2.components[i];
         }
 
