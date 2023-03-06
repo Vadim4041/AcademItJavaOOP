@@ -7,24 +7,24 @@ public class Square implements Shape {
         this.sideLength = sideLength;
     }
 
+    @Override
     public double getWidth() {
         return sideLength;
     }
 
+    @Override
     public double getHeight() {
         return sideLength;
     }
 
+    @Override
     public double getArea() {
         return sideLength * sideLength;
     }
 
+    @Override
     public double getPerimeter() {
         return sideLength * 4;
-    }
-
-    public static double getSideLength(Square square) {
-        return square.sideLength;
     }
 
     @Override

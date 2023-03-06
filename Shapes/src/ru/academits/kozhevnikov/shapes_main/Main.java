@@ -1,8 +1,8 @@
 package ru.academits.kozhevnikov.shapes_main;
 
 import ru.academits.kozhevnikov.shapes.*;
-import ru.academits.kozhevnikov.shapes.comparators.AreaComparator;
-import ru.academits.kozhevnikov.shapes.comparators.PerimeterComparator;
+import ru.academits.kozhevnikov.shapes.comparators.ShapesAreaComparator;
+import ru.academits.kozhevnikov.shapes.comparators.ShapesPerimeterComparator;
 
 import java.util.Arrays;
 
@@ -36,22 +36,24 @@ public class Main {
         System.out.println(shapes[3].hashCode());
         System.out.println(shapes[8].hashCode());
 
-        Arrays.sort(shapes, new AreaComparator());
+        Arrays.sort(shapes, new ShapesAreaComparator());
 
+        Shape lastShape = shapes[shapes.length - 1];
         System.out.println("Характеристики фигуры с максимальной площадью:");
-        System.out.println("Ширина: " + shapes[shapes.length - 1].getWidth());
-        System.out.println("Высота: " + shapes[shapes.length - 1].getHeight());
-        System.out.println("Площадь: " + shapes[shapes.length - 1].getArea());
-        System.out.println("Периметр: " + shapes[shapes.length - 1].getPerimeter());
+        System.out.println("Ширина: " + lastShape.getWidth());
+        System.out.println("Высота: " + lastShape.getHeight());
+        System.out.println("Площадь: " + lastShape.getArea());
+        System.out.println("Периметр: " + lastShape.getPerimeter());
 
         System.out.println();
 
-        Arrays.sort(shapes, new PerimeterComparator());
+        Arrays.sort(shapes, new ShapesPerimeterComparator());
 
+        Shape penultimateShape = shapes[shapes.length - 2];
         System.out.println("Характеристики фигуры со вторым по величине периметром:");
-        System.out.println("Ширина: " + shapes[shapes.length - 2].getWidth());
-        System.out.println("Высота: " + shapes[shapes.length - 2].getHeight());
-        System.out.println("Площадь: " + shapes[shapes.length - 2].getArea());
-        System.out.println("Периметр: " + shapes[shapes.length - 2].getPerimeter());
+        System.out.println("Ширина: " + penultimateShape.getWidth());
+        System.out.println("Высота: " + penultimateShape.getHeight());
+        System.out.println("Площадь: " + penultimateShape.getArea());
+        System.out.println("Периметр: " + penultimateShape.getPerimeter());
     }
 }
