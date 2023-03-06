@@ -27,7 +27,7 @@ public class Vector {
 
     public Vector(int size, double[] numbers) {
         if (size <= 0) {
-            throw new IllegalArgumentException(String.format("Введенный размер вектора равен %d. Размер вектора должна быть больше нуля", size));
+            throw new IllegalArgumentException(String.format("Переданный размер вектора равен %d. Размер вектора должен быть больше нуля", size));
         }
 
         components = Arrays.copyOf(numbers, size);
