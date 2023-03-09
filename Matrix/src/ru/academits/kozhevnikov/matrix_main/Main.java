@@ -4,7 +4,7 @@ import ru.academits.kozhevnikov.matrix.Matrix;
 import ru.academits.kozhevnikov.vector.Vector;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Matrix matrix1 = new Matrix(3, 1);
         Matrix matrix2 = new Matrix(matrix1);
         Matrix matrix3 = new Matrix(new double[][]{{1, 2}, {4, 5, 6}, {7, 8}});
@@ -37,7 +37,7 @@ public class Main {
         System.out.println("Транспонированная матрица 4:");
         System.out.println(matrix4);
 
-        matrix4.getProduct(2);
+        matrix4.multiplyByNumber(2);
 
         System.out.println("Матрица 4, умноженная на 2:");
         System.out.println(matrix4);
