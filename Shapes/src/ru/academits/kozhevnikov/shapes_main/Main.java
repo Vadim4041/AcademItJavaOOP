@@ -38,22 +38,22 @@ public class Main {
 
         Arrays.sort(shapes, new ShapeAreaComparator());
 
-        Shape maxSortedShape = shapes[shapes.length - 1];
+        Shape maxAreaShape = shapes[shapes.length - 1];
         System.out.println("Характеристики фигуры с максимальной площадью:");
-        System.out.println("Ширина: " + maxSortedShape.getWidth());
-        System.out.println("Высота: " + maxSortedShape.getHeight());
-        System.out.println("Площадь: " + maxSortedShape.getArea());
-        System.out.println("Периметр: " + maxSortedShape.getPerimeter());
+        System.out.println("Ширина: " + maxAreaShape.getWidth());
+        System.out.println("Высота: " + maxAreaShape.getHeight());
+        System.out.println("Площадь: " + maxAreaShape.getArea());
+        System.out.println("Периметр: " + maxAreaShape.getPerimeter());
 
         System.out.println();
 
         Arrays.sort(shapes, new ShapePerimeterComparator());
 
-        Shape secondMaxSortedShape = shapes[shapes.length - 2];
+        Shape secondMaxPerimeterShape = shapes[shapes.length - 2];
         System.out.println("Характеристики фигуры со вторым по величине периметром:");
-        System.out.println("Ширина: " + secondMaxSortedShape.getWidth());
-        System.out.println("Высота: " + secondMaxSortedShape.getHeight());
-        System.out.println("Площадь: " + secondMaxSortedShape.getArea());
-        System.out.println("Периметр: " + secondMaxSortedShape.getPerimeter());
+        System.out.println("Ширина: " + secondMaxPerimeterShape.getWidth());
+        System.out.println("Высота: " + secondMaxPerimeterShape.getHeight());
+        System.out.println("Площадь: " + secondMaxPerimeterShape.getArea());
+        System.out.println("Периметр: " + secondMaxPerimeterShape.getPerimeter());
     }
 }
