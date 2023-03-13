@@ -25,44 +25,45 @@ public class ArrayListHome {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
-            ArrayList<String> strings = new ArrayList<>();
+            ArrayList<String> lines = new ArrayList<>();
 
-            while (reader.ready()) {
-                strings.add(reader.readLine());
+            String line = reader.readLine();
+
+            while (line != null) {
+                lines.add(reader.readLine());
+                line = reader.readLine();
             }
 
-            System.out.println("Список строк после прочтения файла: " + strings);
+            System.out.println("Список строк после прочтения файла: " + lines);
         } catch (FileNotFoundException e) {
             System.out.println("Входной файл не найден");
         } catch (IOException e) {
             System.out.println("Ошибка ввода/вывода");
         }
-        // 2 задача:
-        ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(4, 6, 3, 7, 34, 12));
 
-        for (int i = 0; i < integers.size(); i++) {
-            if (integers.get(i) % 2 == 0) {
-                integers.remove(i);
+        // 2 задача:
+        ArrayList<Integer> integers1 = new ArrayList<>(Arrays.asList(4, 6, 3, 7, 34, 12));
+
+        for (int i = 0; i < integers1.size(); i++) {
+            if (integers1.get(i) % 2 == 0) {
+                integers1.remove(i);
                 i--;
             }
         }
 
-        System.out.println("Список целых чисел после удаления всех четных чисел: " + integers);
-
+        System.out.println("Список целых чисел после удаления всех четных чисел: " + integers1);
         // 3 задача:
-        ArrayList<Integer> integers1 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5, 6, 6));
+        ArrayList<Integer> integers2 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5, 6, 6));
+        ArrayList<Integer> integers2WithoutRepeats = new ArrayList<>(integers2.size());
 
-        for (int i = 0; i < integers1.size(); i++) {
-            int numberToCheck = integers1.get(i);
-
-            for (int j = i + 1; j < integers1.size(); j++) {
-                if (integers1.get(j) == numberToCheck) {
-                    integers1.remove(j);
-                    j--;
-                }
+        for (int e : integers2) {
+            if (integers2WithoutRepeats.contains(e)) {
+                continue;
             }
+
+            integers2WithoutRepeats.add(e);
         }
 
-        System.out.println("Список целых чисел после удаления всех повторяющихся чисел: " + integers1);
+        System.out.println("Список целых чисел без повторяющихся чисел: " + integers2WithoutRepeats);
     }
 }
