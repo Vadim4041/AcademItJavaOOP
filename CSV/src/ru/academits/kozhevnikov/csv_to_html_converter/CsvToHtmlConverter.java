@@ -1,10 +1,10 @@
-package ru.academits.kozhevnikov;
+package ru.academits.kozhevnikov.csv_to_html_converter;
 
 import java.io.*;
 
-public class CSVToHTMLConverter {
+public class CsvToHtmlConverter {
     public static void main(String[] args) {
-        if (args.length < 2) {
+        if (args.length != 2) {
             System.out.printf("Передано следующее количество аргументов: %d. Необходимо передать два аргумента. Первый аргумент - путь к CSV файлу," +
                     "второй аргумент - путь к выходному HTML файлу.", args.length);
 
@@ -13,7 +13,11 @@ public class CSVToHTMLConverter {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]));
              PrintWriter writer = new PrintWriter(args[1])) {
-            writer.println("<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>title</title>\n</head>");
+            writer.println("<html>");
+            writer.println("<head>");
+            writer.println("    <meta charset=\"UTF-8\">");
+            writer.println("    <title>title</title>");
+            writer.println("</head>");
             writer.println("<body>");
             writer.println("<table border=\"1\">");
 
@@ -27,7 +31,7 @@ public class CSVToHTMLConverter {
                         if (isCellCreated) {
                             writer.print("<br/>");
                         } else {
-                            writer.print("    <tr><td>");
+                            writer.print("  <tr><td>");
                         }
                     }
 
@@ -99,7 +103,9 @@ public class CSVToHTMLConverter {
                 }
             }
 
-            writer.print("</table>\n</body>\n</html>");
+            writer.println("</table>");
+            writer.println("</body>");
+            writer.print("</html>");
         } catch (FileNotFoundException e) {
             System.out.println("Входной файл не найден");
         } catch (IOException e) {
