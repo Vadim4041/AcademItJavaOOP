@@ -11,7 +11,10 @@ package ru.academits.kozhevnikov;
 список [1, 5, 2, 3]
  */
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,7 +33,7 @@ public class ArrayListHome {
             String line = reader.readLine();
 
             while (line != null) {
-                lines.add(reader.readLine());
+                lines.add(line);
                 line = reader.readLine();
             }
 
@@ -56,12 +59,10 @@ public class ArrayListHome {
         ArrayList<Integer> integers2 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5, 6, 6));
         ArrayList<Integer> integers2WithoutRepeats = new ArrayList<>(integers2.size());
 
-        for (int e : integers2) {
-            if (integers2WithoutRepeats.contains(e)) {
-                continue;
+        for (Integer e : integers2) {
+            if (!integers2WithoutRepeats.contains(e)) {
+                integers2WithoutRepeats.add(e);
             }
-
-            integers2WithoutRepeats.add(e);
         }
 
         System.out.println("Список целых чисел без повторяющихся чисел: " + integers2WithoutRepeats);
