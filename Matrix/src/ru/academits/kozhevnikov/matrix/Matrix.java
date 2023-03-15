@@ -8,9 +8,9 @@ public class Matrix {
     public Matrix(int rowsQuantity, int columnsQuantity) {
         if (columnsQuantity <= 0 || rowsQuantity <= 0) {
             throw new IllegalArgumentException(String.format("Размеры матрицы должны быть больше нуля." +
-                            "Передано следующее количество столбцов матрицы: %d. " +
-                            "Передано следующее количество строк матрицы: %d.",
-                    columnsQuantity, rowsQuantity));
+                            "Передано следующее количество строк матрицы: %d. " +
+                            "Передано следующее количество столбцов матрицы: %d.",
+                    rowsQuantity, columnsQuantity));
         }
 
         rows = new Vector[rowsQuantity];
@@ -83,8 +83,7 @@ public class Matrix {
         sb.append("{");
 
         for (Vector vector : rows) {
-            sb.append(vector);
-            sb.append(", ");
+            sb.append(vector).append(", ");
         }
 
         sb.delete(sb.length() - 2, sb.length());
@@ -109,8 +108,12 @@ public class Matrix {
     }
 
     public void setRow(int index, Vector row) {
-        if (index < 0 || index >= rows.length) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля и больше %d. " +
+        if (index < 0) {
+            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля. Передан индекс столбца: %d.", index));
+        }
+
+        if (index >= rows.length) {
+            throw new IndexOutOfBoundsException(String.format("Индекс не может быть больше %d. " +
                     "Передан индекс строки: %d.", rows.length - 1, index));
         }
 
@@ -124,11 +127,13 @@ public class Matrix {
 
     public Vector getColumn(int index) {
         if (index < 0) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля. Передан индекс столбца: %d.", index));
+            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля. " +
+                    "Передан индекс столбца: %d.", index));
         }
 
         if (index >= getColumnsQuantity()) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть больше %d. Передан индекс столбца: %d.", getColumnsQuantity() - 1, index));
+            throw new IndexOutOfBoundsException(String.format("Индекс не может быть больше %d. " +
+                    "Передан индекс столбца: %d.", getColumnsQuantity() - 1, index));
         }
 
         Vector vector = new Vector(rows.length);
@@ -152,8 +157,8 @@ public class Matrix {
     }
 
     public void multiplyByNumber(double multiplier) {
-        for (Vector e : rows) {
-            e.multiplyByNumber(multiplier);
+        for (Vector row : rows) {
+            row.multiplyByNumber(multiplier);
         }
     }
 
@@ -245,12 +250,12 @@ public class Matrix {
 
     public static Matrix getProduct(Matrix matrix1, Matrix matrix2) {
         if (matrix1.getColumnsQuantity() != matrix2.getRowsQuantity()) {
-            throw new IllegalArgumentException(String.format("Количество строк умножаемой матрицы должно быть равно количеству столбцов матрицы-множителя." +
-                            "Количество столбцов умножаемой матрицы: %d. " +
-                            "Количество строк умножаемой матрицы: %d. " +
-                            "Количество столбцов матрицы-множителя: %d. " +
-                            "Количество строк матрицы-множителя: %d. ",
-                    matrix1.getColumnsQuantity(), matrix1.getRowsQuantity(), matrix2.getColumnsQuantity(), matrix2.getRowsQuantity()));
+            throw new IllegalArgumentException(String.format("Количество строк первой матрицы должно быть равно количеству столбцов второй матрицы." +
+                            "Количество строк первой матрицы: %d. " +
+                            "Количество строк второй матрицы: %d. " +
+                            "Количество столбцов первой матрицы: %d. " +
+                            "Количество столбцов второй матрицы: %d. ",
+                    matrix1.getRowsQuantity(), matrix2.getRowsQuantity(), matrix1.getColumnsQuantity(), matrix2.getColumnsQuantity()));
         }
 
         int newRowsQuantity = matrix1.getRowsQuantity();
@@ -269,11 +274,11 @@ public class Matrix {
     private static void checkDimensionsEquality(Matrix matrix1, Matrix matrix2) {
         if (matrix1.getColumnsQuantity() != matrix2.getColumnsQuantity() || matrix1.getRowsQuantity() != matrix2.getRowsQuantity()) {
             throw new IllegalArgumentException(String.format("Количество столбцов и строк матриц должно быть одинаковым. " +
-                            "Количество столбцов первой матрицы: %d. " +
                             "Количество строк первой матрицы: %d. " +
-                            "Количество столбцов второй матрицы: %d. " +
-                            "Количество строк второй матрицы: %d. ",
-                    matrix1.getColumnsQuantity(), matrix1.getRowsQuantity(), matrix2.getColumnsQuantity(), matrix2.getRowsQuantity()));
+                            "Количество строк второй матрицы: %d. " +
+                            "Количество столбцов первой матрицы: %d. " +
+                            "Количество столбцов второй матрицы: %d. ",
+                    matrix1.getRowsQuantity(), matrix2.getRowsQuantity(), matrix1.getColumnsQuantity(), matrix2.getColumnsQuantity()));
         }
     }
 }
