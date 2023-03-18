@@ -108,12 +108,8 @@ public class Matrix {
     }
 
     public void setRow(int index, Vector row) {
-        if (index < 0) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля. Передан индекс столбца: %d.", index));
-        }
-
-        if (index >= rows.length) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть больше %d. " +
+        if (index < 0 || index >= rows.length) {
+            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля и больше %d. " +
                     "Передан индекс строки: %d.", rows.length - 1, index));
         }
 
@@ -126,14 +122,9 @@ public class Matrix {
     }
 
     public Vector getColumn(int index) {
-        if (index < 0) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля. " +
-                    "Передан индекс столбца: %d.", index));
-        }
-
-        if (index >= getColumnsQuantity()) {
-            throw new IndexOutOfBoundsException(String.format("Индекс не может быть больше %d. " +
-                    "Передан индекс столбца: %d.", getColumnsQuantity() - 1, index));
+        if (index < 0 || index >= rows.length) {
+            throw new IndexOutOfBoundsException(String.format("Индекс не может быть меньше нуля и больше %d. " +
+                    "Передан индекс строки: %d.", rows.length - 1, index));
         }
 
         Vector vector = new Vector(rows.length);
