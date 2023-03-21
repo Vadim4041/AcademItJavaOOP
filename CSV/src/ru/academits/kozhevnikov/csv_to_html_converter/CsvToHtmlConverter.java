@@ -15,23 +15,22 @@ public class CsvToHtmlConverter {
              PrintWriter writer = new PrintWriter(args[1])) {
             writer.println("<html>");
             writer.println("<head>");
-            writer.println("    <meta charset=\"UTF-8\">");
-            writer.println("    <title>title</title>");
+            writer.println("\t<meta charset=\"UTF-8\">");
+            writer.println("\t<title>title</title>");
             writer.println("</head>");
             writer.println("<body>");
             writer.println("<table border=\"1\">");
 
             boolean isCellCreated = false;
+            String line = reader.readLine();
 
-            while (reader.ready()) {
-                String line = reader.readLine();
-
+            while (line != null) {
                 for (int i = 0; i < line.length(); i++) {
                     if (i == 0) {
                         if (isCellCreated) {
                             writer.print("<br/>");
                         } else {
-                            writer.print("  <tr><td>");
+                            writer.print("\t<tr><td>");
                         }
                     }
 
@@ -101,6 +100,8 @@ public class CsvToHtmlConverter {
 
                     writer.print(character);
                 }
+
+                line = reader.readLine();
             }
 
             writer.println("</table>");
