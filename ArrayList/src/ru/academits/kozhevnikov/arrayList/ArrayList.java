@@ -6,6 +6,7 @@ public class ArrayList<T> implements List<T> {
     private T[] items;
     private int size;
     private final int DEFAULT_CAPACITY = 10;
+    private int modCount;
 
     public ArrayList() {
         items = (T[]) new Object[DEFAULT_CAPACITY];
@@ -80,6 +81,7 @@ public class ArrayList<T> implements List<T> {
 
     private class ArrayListIterator implements Iterator<T> {
         private int currentIndex = -1;
+        private final int initialModCount = modCount;
 
         @Override
         public boolean hasNext() {
@@ -90,6 +92,10 @@ public class ArrayList<T> implements List<T> {
         public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException(String.format("Элемент с индексом %d является последним.", currentIndex));
+            }
+
+            if (modCount != initialModCount) {
+                throw new ConcurrentModificationException("ArrayList has been modified");
             }
 
             currentIndex++;
@@ -140,6 +146,7 @@ public class ArrayList<T> implements List<T> {
         System.arraycopy(items, index, items, index + 1, size - index);
         items[index] = element;
 
+        modCount++;
         size++;
     }
 
@@ -170,6 +177,7 @@ public class ArrayList<T> implements List<T> {
         ensureCapacity(size + c.size());
 
         System.arraycopy(items, index, items, index + c.size(), size - index);
+        modCount++;
         size += c.size();
 
         int currentIndex = index;
@@ -222,6 +230,7 @@ public class ArrayList<T> implements List<T> {
             items[i] = null;
         }
 
+        modCount++;
         size = 0;
     }
 
@@ -252,6 +261,7 @@ public class ArrayList<T> implements List<T> {
         System.arraycopy(items, index + 1, items, index, size - index - 1);
 
         items[size - 1] = null;
+        modCount++;
         --size;
 
         return removedItem;
