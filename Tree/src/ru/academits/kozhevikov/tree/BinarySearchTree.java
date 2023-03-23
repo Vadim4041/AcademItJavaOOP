@@ -20,33 +20,15 @@ public class BinarySearchTree {
             return new Node(value);
         }
 
-        if (value < current.value) {
-            current.left = insertRecursive(current.left, value);
-        } else if (value > current.value) {
-            current.right = insertRecursive(current.right, value);
+        if (value <= current.getValue()) {
+            current.setLeft(insertRecursive(current.getLeft(), value));
+        } else if (value > current.getValue()) {
+            current.setRight(insertRecursive(current.getRight(), value));
         } else {
             return current;
         }
 
         return current;
-    }
-
-    public boolean contains(int value) {
-        return containsRecursive(root, value);
-    }
-
-    private boolean containsRecursive(Node current, int value) {
-        if (current == null) {
-            return false;
-        }
-
-        if (value == current.value) {
-            return true;
-        }
-
-        return value < current.value
-                ? containsRecursive(current.left, value)
-                : containsRecursive(current.right, value);
     }
 
     public void delete(int value) {
@@ -58,36 +40,36 @@ public class BinarySearchTree {
             return null;
         }
 
-        if (value == current.value) {
-            if (current.left == null && current.right == null) {
+        if (value == current.getValue()) {
+            if (current.getLeft() == null && current.getRight() == null) {
                 return null;
             }
 
-            if (current.right == null) {
-                return current.left;
+            if (current.getRight() == null) {
+                return current.getLeft();
             }
 
-            if (current.left == null) {
-                return current.right;
+            if (current.getLeft() == null) {
+                return current.getRight();
             }
 
-            int smallestValue = findSmallestValue(current.right);
-            current.value = smallestValue;
-            current.right = deleteRecursive(current.right, smallestValue);
+            int smallestValue = findSmallestValue(current.getRight());
+            current.setValue(smallestValue);
+            current.setRight(deleteRecursive(current.getRight(), smallestValue));
             return current;
         }
 
-        if (value < current.value) {
-            current.left = deleteRecursive(current.left, value);
+        if (value < current.getValue()) {
+            current.setLeft(deleteRecursive(current.getLeft(), value));
             return current;
         }
 
-        current.right = deleteRecursive(current.right, value);
+        current.setRight(deleteRecursive(current.getRight(), value));
         return current;
     }
 
     private int findSmallestValue(Node root) {
-        return root.left == null ? root.value : findSmallestValue(root.left);
+        return root.getLeft() == null ? root.getValue() : findSmallestValue(root.getLeft());
     }
 
     public void traverseInOrder() {
@@ -99,9 +81,9 @@ public class BinarySearchTree {
             return;
         }
 
-        traverseInOrder(node.left);
-        System.out.print(node.value + " ");
-        traverseInOrder(node.right);
+        traverseInOrder(node.getLeft());
+        System.out.print(node.getValue() + " ");
+        traverseInOrder(node.getRight());
     }
 
     public void traverseBreadthFirst() {
@@ -114,36 +96,14 @@ public class BinarySearchTree {
 
         while (!queue.isEmpty()) {
             Node node = queue.poll();
-            System.out.print(node.value + " ");
+            System.out.print(node.getValue() + " ");
 
-            if (node.left != null) {
-                queue.add(node.left);
+            if (node.getLeft() != null) {
+                queue.add(node.getLeft());
             }
 
-            if (node.right != null) {
-                queue.add(node.right);
-            }
-        }
-    }
-
-    public void traverseBreadthFirst(Node node) {
-        if (node == null) {
-            return;
-        }
-
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(node);
-
-        while (!queue.isEmpty()) {
-            Node current = queue.poll();
-            System.out.print(current.value + " ");
-
-            if (current.left != null) {
-                queue.add(current.left);
-            }
-
-            if (current.right != null) {
-                queue.add(current.right);
+            if (node.getRight() != null) {
+                queue.add(node.getRight());
             }
         }
     }
@@ -162,10 +122,10 @@ public class BinarySearchTree {
         }
 
         if (level == 1) {
-            System.out.print(node.value + " ");
+            System.out.print(node.getValue() + " ");
         } else if (level > 1) {
-            traverseBreadthFirstRecursive(node.left, level - 1);
-            traverseBreadthFirstRecursive(node.right, level - 1);
+            traverseBreadthFirstRecursive(node.getLeft(), level - 1);
+            traverseBreadthFirstRecursive(node.getRight(), level - 1);
         }
     }
 
@@ -179,36 +139,14 @@ public class BinarySearchTree {
 
         while (!stack.isEmpty()) {
             Node node = stack.pop();
-            System.out.print(node.value + " ");
+            System.out.print(node.getValue() + " ");
 
-            if (node.right != null) {
-                stack.push(node.right);
+            if (node.getRight() != null) {
+                stack.push(node.getRight());
             }
 
-            if (node.left != null) {
-                stack.push(node.left);
-            }
-        }
-    }
-
-    public void traverseDepthFirst(Node node) {
-        if (node == null) {
-            return;
-        }
-
-        Stack<Node> stack = new Stack<>();
-        stack.push(node);
-
-        while (!stack.isEmpty()) {
-            Node current = stack.pop();
-            System.out.print(current.value + " ");
-
-            if (current.right != null) {
-                stack.push(current.right);
-            }
-
-            if (current.left != null) {
-                stack.push(current.left);
+            if (node.getLeft() != null) {
+                stack.push(node.getLeft());
             }
         }
     }
@@ -222,9 +160,9 @@ public class BinarySearchTree {
             return;
         }
 
-        System.out.print(node.value + " ");
-        traverseDepthFirstRecursive(node.left);
-        traverseDepthFirstRecursive(node.right);
+        System.out.print(node.getValue() + " ");
+        traverseDepthFirstRecursive(node.getLeft());
+        traverseDepthFirstRecursive(node.getRight());
     }
 
     private int getHeight(Node node) {
@@ -232,8 +170,8 @@ public class BinarySearchTree {
             return 0;
         }
 
-        int leftHeight = getHeight(node.left);
-        int rightHeight = getHeight(node.right);
+        int leftHeight = getHeight(node.getLeft());
+        int rightHeight = getHeight(node.getRight());
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
@@ -243,14 +181,14 @@ public class BinarySearchTree {
     }
 
     private Node findNode(Node node, int value) {
-        if (node == null || node.value == value) {
+        if (node == null || node.getValue() == value) {
             return node;
         }
 
-        if (value < node.value) {
-            return findNode(node.left, value);
+        if (value < node.getValue()) {
+            return findNode(node.getLeft(), value);
         } else {
-            return findNode(node.right, value);
+            return findNode(node.getRight(), value);
         }
     }
 
@@ -263,9 +201,6 @@ public class BinarySearchTree {
             return 0;
         }
 
-        return getNodeCount(node.left) + getNodeCount(node.right) + 1;
+        return getNodeCount(node.getLeft()) + getNodeCount(node.getRight()) + 1;
     }
 }
-
-
-
