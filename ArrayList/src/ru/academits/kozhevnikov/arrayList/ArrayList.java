@@ -1,25 +1,27 @@
-package ru.academits.kozhevnikov.arrayList;
+package ru.academits.kozhevnikov.arraylist;
 
 import java.util.*;
 
-public class ArrayList<T> implements List<T> {
-    private T[] items;
+public class ArrayList<E> implements List<E> {
+    private final static int DEFAULT_CAPACITY = 10;
+
+    private E[] items;
     private int size;
-    private final int DEFAULT_CAPACITY = 10;
     private int modCount;
 
     public ArrayList() {
-        items = (T[]) new Object[DEFAULT_CAPACITY];
-        size = DEFAULT_CAPACITY;
+        //noinspection unchecked
+        items = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     public ArrayList(int capacity) {
         if (capacity < 0) {
-            throw new IllegalArgumentException(String.format("Введен размер списка %d. Размер списка не может быть меньше 0.", capacity));
+            throw new IllegalArgumentException(String.format("Передана вместимость списка списка %d. " +
+                    "Вместимость списка не может быть меньше 0.", capacity));
         }
 
-        items = (T[]) new Object[capacity];
-        size = items.length;
+        //noinspection unchecked
+        items = (E[]) new Object[capacity];
     }
 
     private void checkIndex(int index, boolean isUpperBoundIncluded) {
@@ -31,11 +33,9 @@ public class ArrayList<T> implements List<T> {
     }
 
     public void ensureCapacity(int capacity) {
-        if (capacity <= items.length) {
-            return;
+        if (capacity > items.length) {
+            items = Arrays.copyOf(items, capacity);
         }
-
-        items = Arrays.copyOf(items, capacity);
     }
 
     public void trimToSize() {
@@ -51,15 +51,14 @@ public class ArrayList<T> implements List<T> {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append('[');
 
         for (int i = 0; i < size; i++) {
-            sb.append(items[i]);
-            sb.append(", ");
+            sb.append(items[i]).append(", ");
         }
 
         sb.delete(sb.length() - 2, sb.length());
-        sb.append("]");
+        sb.append(']');
 
         return sb.toString();
     }
@@ -79,7 +78,7 @@ public class ArrayList<T> implements List<T> {
         return indexOf(o) != -1;
     }
 
-    private class ArrayListIterator implements Iterator<T> {
+    private class ArrayListIterator implements Iterator<E> {
         private int currentIndex = -1;
         private final int initialModCount = modCount;
 
@@ -89,13 +88,13 @@ public class ArrayList<T> implements List<T> {
         }
 
         @Override
-        public T next() {
+        public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException(String.format("Элемент с индексом %d является последним.", currentIndex));
             }
 
             if (modCount != initialModCount) {
-                throw new ConcurrentModificationException("ArrayList has been modified");
+                throw new ConcurrentModificationException("Список на массиве был изменен.");
             }
 
             currentIndex++;
@@ -104,7 +103,7 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<E> iterator() {
         return new ArrayListIterator();
     }
 
@@ -114,11 +113,13 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public <T1> T1[] toArray(T1[] a) {
+    public <T> T[] toArray(T[] a) {
         if (a.length < size) {
-            return (T1[]) Arrays.copyOf(items, size);
+            //noinspection unchecked
+            return (T[]) Arrays.copyOf(items, size, a.getClass());
         }
 
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(items, 0, a, 0, size);
 
         if (a.length > size) {
@@ -129,22 +130,26 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public boolean add(T t) {
-        add(size, t);
+    public boolean add(E item) {
+        add(size, item);
 
         return true;
     }
 
+    private void increaseCapacity() {
+        items = Arrays.copyOf(items, items.length == 0 ? 1 : items.length * 2);
+    }
+
     @Override
-    public void add(int index, T element) {
+    public void add(int index, E item) {
         checkIndex(index, true);
 
         if (size == items.length) {
-            ensureCapacity(size == 0 ? DEFAULT_CAPACITY : size * 2);
+            increaseCapacity();
         }
 
         System.arraycopy(items, index, items, index + 1, size - index);
-        items[index] = element;
+        items[index] = item;
 
         modCount++;
         size++;
@@ -163,28 +168,29 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
+    public boolean addAll(Collection<? extends E> c) {
         return addAll(size, c);
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
-        if (c.size() == 0) {
+    public boolean addAll(int index, Collection<? extends E> c) {
+        checkIndex(index, true);
+
+        if (c.isEmpty()) {
             return false;
         }
 
-        checkIndex(index, true);
         ensureCapacity(size + c.size());
 
         System.arraycopy(items, index, items, index + c.size(), size - index);
         modCount++;
         size += c.size();
 
-        int currentIndex = index;
+        int i = index;
 
-        for (T object : c) {
-            items[currentIndex] = object;
-            currentIndex++;
+        for (E item : c) {
+            items[i] = item;
+            i++;
         }
 
         return false;
@@ -192,13 +198,13 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        if (c.size() == 0) {
+        if (c.isEmpty()) {
             return false;
         }
 
         int initialSize = size;
 
-        for (int i = size - 1; i != 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             if (c.contains(items[i])) {
                 remove(i);
             }
@@ -211,7 +217,7 @@ public class ArrayList<T> implements List<T> {
     public boolean retainAll(Collection<?> c) {
         int initialSize = size;
 
-        for (int i = size - 1; i != 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             if (!c.contains(items[i])) {
                 remove(i);
             }
@@ -226,43 +232,41 @@ public class ArrayList<T> implements List<T> {
             return;
         }
 
-        for (int i = 0; i < size; i++) {
-            items[i] = null;
-        }
+        Arrays.fill(items, null);
 
         modCount++;
         size = 0;
     }
 
     @Override
-    public T get(int index) {
+    public E get(int index) {
         checkIndex(index, false);
 
         return items[index];
     }
 
     @Override
-    public T set(int index, T element) {
+    public E set(int index, E item) {
         checkIndex(index, false);
 
-        T oldItem = items[index];
-        items[index] = element;
+        E oldItem = items[index];
+        items[index] = item;
 
         return oldItem;
     }
 
 
     @Override
-    public T remove(int index) {
+    public E remove(int index) {
         checkIndex(index, false);
 
-        T removedItem = items[index];
+        E removedItem = items[index];
 
         System.arraycopy(items, index + 1, items, index, size - index - 1);
 
         items[size - 1] = null;
         modCount++;
-        --size;
+        size--;
 
         return removedItem;
     }
@@ -280,7 +284,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = size - 1; i != 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             if (Objects.equals(items[i], o)) {
                 return i;
             }
@@ -307,17 +311,17 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public ListIterator<T> listIterator() {
+    public ListIterator<E> listIterator() {
         throw new UnsupportedOperationException("Данный метод не реализован.");
     }
 
     @Override
-    public ListIterator<T> listIterator(int index) {
+    public ListIterator<E> listIterator(int index) {
         throw new UnsupportedOperationException("Данный метод не реализован.");
     }
 
     @Override
-    public List<T> subList(int fromIndex, int toIndex) {
+    public List<E> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Данный метод не реализован.");
     }
 }

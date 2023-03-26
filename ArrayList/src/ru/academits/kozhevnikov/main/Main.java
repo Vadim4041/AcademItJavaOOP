@@ -1,19 +1,18 @@
 package ru.academits.kozhevnikov.main;
 
-import ru.academits.kozhevnikov.arrayList.ArrayList;
+import ru.academits.kozhevnikov.arraylist.ArrayList;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Integer> arrayList = new ArrayList<>(5);
-
-        int j = 0;
-        for (Integer ignored : arrayList) {
-            arrayList.set(j, j);
-            j++;
-        }
-
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(32);
+        arrayList.add(1);
+        arrayList.add(14);
+        arrayList.add(12);
+        arrayList.add(15);
+        arrayList.add(27);
 
         System.out.println("Список на массиве после создания:");
         System.out.println(arrayList);
@@ -33,9 +32,16 @@ public class Main {
 
         System.out.println();
 
-        System.out.println("Удаляем следующий элемент: ");
+        System.out.println("Удаляем следующий элемент:");
         System.out.println(arrayList.remove(4));
         System.out.println("Список на массиве после удаления элемента из списка:");
+        System.out.println(arrayList);
+
+        System.out.println();
+
+        System.out.println("Удаляем следующие элементы: 32, 10");
+        System.out.println(arrayList.removeAll(Arrays.asList(32, 10)));
+        System.out.println("Список на массиве после удаления элементов из списка:");
         System.out.println(arrayList);
 
         System.out.println();
@@ -45,8 +51,5 @@ public class Main {
         System.out.println(Arrays.toString(array));
         System.out.println("Выводим последний элемент массива:");
         System.out.println(array[array.length - 1]);
-
-
-
     }
 }
