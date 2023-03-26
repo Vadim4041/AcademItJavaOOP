@@ -9,49 +9,43 @@ import java.awt.event.ActionListener;
 
 public class TemperatureView extends JPanel implements ActionListener {
     private final TemperatureModel model;
-    private JTextField inputField;
-    private JTextField outputField;
-    private JComboBox<String> conversionDirection;
-    private JButton convertButton;
+    private final JTextField inputField;
+    private final JTextField outputField;
+    private final JComboBox<String> conversionDirection;
+    private final JButton convertButton;
 
     public TemperatureView(TemperatureModel m) {
         model = m;
 
-        SwingUtilities.invokeLater(() -> {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ignored) {
-            }
+        // Create the input label and text field
+        JLabel inputLabel = new JLabel("Input temperature:");
+        inputField = new JTextField(10);
 
-            // Create the input label and text field
-            JLabel inputLabel = new JLabel("Input temperature:");
-            inputField = new JTextField(10);
+        // Create the output label and text field
+        JLabel outputLabel = new JLabel("Converted temperature:");
+        outputField = new JTextField(10);
+        outputField.setEditable(false);
 
-            // Create the output label and text field
-            JLabel outputLabel = new JLabel("Converted temperature:");
-            outputField = new JTextField(10);
-            outputField.setEditable(false);
+        // Create the conversion direction combo box
+        conversionDirection = new JComboBox<>(new String[]{"Celsius to Fahrenheit", "Celsius to Kelvin",
+                "Fahrenheit to Celsius", "Fahrenheit to Kelvin", "Kelvin to Celsius", "Kelvin to Fahrenheit"});
+        conversionDirection.addActionListener(this);
 
-            // Create the conversion direction combo box
-            conversionDirection = new JComboBox<>(new String[]{"Celsius to Fahrenheit", "Celsius to Kelvin",
-                    "Fahrenheit to Celsius", "Fahrenheit to Kelvin", "Kelvin to Celsius", "Kelvin to Fahrenheit"});
-            conversionDirection.addActionListener(this);
+        // Create the Convert button
+        convertButton = new JButton("Convert");
+        convertButton.addActionListener(this);
 
-            // Create the Convert button
-            convertButton = new JButton("Convert");
-            convertButton.addActionListener(this);
+        // Add the components to the panel
+        setLayout(new GridLayout(4, 2));
+        add(inputLabel);
+        add(inputField);
+        add(outputLabel);
+        add(outputField);
+        add(new JLabel("Conversion direction:"));
+        add(conversionDirection);
+        add(new JLabel());
+        add(convertButton);
 
-            // Add the components to the panel
-            setLayout(new GridLayout(4, 2));
-            add(inputLabel);
-            add(inputField);
-            add(outputLabel);
-            add(outputField);
-            add(new JLabel("Conversion direction:"));
-            add(conversionDirection);
-            add(new JLabel());
-            add(convertButton);
-        });
     }
 
 

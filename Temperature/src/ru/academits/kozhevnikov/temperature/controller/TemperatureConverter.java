@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class TemperatureConverter extends JFrame {
 
-    public TemperatureConverter() {
+    public TemperatureConverter() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         super("Temperature Converter");
 
         // Create the model and view
@@ -18,11 +18,11 @@ public class TemperatureConverter extends JFrame {
         // Add the view to the JFrame
         getContentPane().add(view);
 
-        setIconImage(new ImageIcon("Temperature/src/ru/academits/kozhevnikov/temperature/resources/TemperatureImage.png").getImage());
-
         // Set up the JFrame
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon("Temperature/src/ru/academits/kozhevnikov/temperature/resources/TemperatureImage.png").getImage());
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         // Make the JFrame visible
         setVisible(true);
