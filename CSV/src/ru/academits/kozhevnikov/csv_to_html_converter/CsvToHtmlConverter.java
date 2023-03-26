@@ -5,7 +5,7 @@ import java.io.*;
 public class CsvToHtmlConverter {
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.out.printf("Передано следующее количество аргументов: %d. Необходимо передать два аргумента. Первый аргумент - путь к CSV файлу," +
+            System.out.printf("Передано следующее количество аргументов: %d. Необходимо передать два аргумента. Первый аргумент - путь к CSV файлу, " +
                     "второй аргумент - путь к выходному HTML файлу.", args.length);
 
             return;
