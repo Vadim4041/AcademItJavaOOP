@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class LambdasTask1 {
     public static void main(String[] args) {
-        List<Person> peopleList1 = Arrays.asList(
+        List<Person> peopleList = Arrays.asList(
                 new Person(17, "Oleg"),
                 new Person(25, "Irina"),
                 new Person(58, "Sergey"),
@@ -36,17 +36,17 @@ public class LambdasTask1 {
         );
 
         System.out.println("People list:");
-        peopleList1.forEach(System.out::println);
+        peopleList.forEach(System.out::println);
         System.out.println();
 
         // Задача А
-        List<String> peopleList2 = peopleList1.stream()
+        List<String> distinctNamesList = peopleList.stream()
                 .map(Person::name)
                 .distinct()
                 .toList();
 
         // Задача Б
-        System.out.println(peopleList2.stream()
+        System.out.println(distinctNamesList.stream()
                 .collect(Collectors.joining(", ", "Names: ", ".")));
 
         System.out.println();
@@ -54,7 +54,7 @@ public class LambdasTask1 {
         // Задача В
         final int ADULT_AGE = 18;
 
-        List<Person> underagePeople = peopleList1.stream()
+        List<Person> underagePeople = peopleList.stream()
                 .filter(g -> g.age() < ADULT_AGE)
                 .toList();
 
@@ -69,14 +69,14 @@ public class LambdasTask1 {
         System.out.println();
 
         // Задача Г
-        Map<String, Double> NamesAndAverageAgeMap = peopleList1.stream()
+        Map<String, Double> averageAgeByNames = peopleList.stream()
                 .collect(Collectors.groupingBy(
                         Person::name,
-                        Collectors.averagingDouble(Person::age))
+                        Collectors.averagingInt(Person::age))
                 );
 
         System.out.println("Average age of people with following names:");
-        NamesAndAverageAgeMap.forEach((name, age) -> System.out.printf("%s: %.2f%n", name, age));
+        averageAgeByNames.forEach((name, age) -> System.out.printf("%s: %.2f%n", name, age));
 
         System.out.println();
 
@@ -84,14 +84,13 @@ public class LambdasTask1 {
         final int UPPER_LIMIT = 45;
         final int LOWER_LIMIT = 20;
 
-        String peopleList3 = String.valueOf(peopleList1.stream()
-                .filter(Person -> Person.age() >= LOWER_LIMIT)
-                .filter(Person -> Person.age() <= UPPER_LIMIT)
+        List<String> peopleNamesList = peopleList.stream()
+                .filter(p -> p.age() >= LOWER_LIMIT && p.age() <= UPPER_LIMIT)
                 .sorted((p1, p2) -> (p2.age() - p1.age()))
                 .map(Person::name)
-                .toList());
+                .toList();
 
         System.out.println("People between the age of 20 and 45 in descending order according to their age:");
-        System.out.println(peopleList3);
+        System.out.println(peopleNamesList);
     }
 }
