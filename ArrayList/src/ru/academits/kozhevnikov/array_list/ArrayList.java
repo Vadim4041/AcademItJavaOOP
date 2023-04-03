@@ -138,7 +138,8 @@ public class ArrayList<E> implements List<E> {
 
     private void increaseCapacity() {
         if (items.length == 0) {
-            return;
+            //noinspection unchecked
+            items = (E[]) new Object[DEFAULT_CAPACITY];
         }
 
         items = Arrays.copyOf(items, items.length * 2);
