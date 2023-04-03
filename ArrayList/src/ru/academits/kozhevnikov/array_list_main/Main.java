@@ -1,6 +1,6 @@
-package ru.academits.kozhevnikov.main;
+package ru.academits.kozhevnikov.array_list_main;
 
-import ru.academits.kozhevnikov.arraylist.ArrayList;
+import ru.academits.kozhevnikov.array_list.ArrayList;
 
 import java.util.Arrays;
 
@@ -42,6 +42,12 @@ public class Main {
         System.out.println("Удаляем следующие элементы: 32, 10");
         System.out.println(arrayList.removeAll(Arrays.asList(32, 10)));
         System.out.println("Список на массиве после удаления элементов из списка:");
+        System.out.println(arrayList);
+
+        System.out.println();
+
+        System.out.println("Добавляем в список на массиве новый список по индексу:");
+        System.out.println(arrayList.addAll(2, Arrays.asList(2, 5)));
         System.out.println(arrayList);
 
         System.out.println();

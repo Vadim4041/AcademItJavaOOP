@@ -1,4 +1,4 @@
-package ru.academits.kozhevnikov.arraylist;
+package ru.academits.kozhevnikov.array_list;
 
 import java.util.*;
 
@@ -25,10 +25,10 @@ public class ArrayList<E> implements List<E> {
     }
 
     private void checkIndex(int index, boolean isUpperBoundIncluded) {
-        int maxIndex = isUpperBoundIncluded ? size + 1 : size;
+        int upperBound = isUpperBoundIncluded ? size + 1 : size;
 
-        if (index < 0 || index > maxIndex) {
-            throw new IndexOutOfBoundsException(String.format("Передан индекс %d. Индекс должен быть не меньше 0 и не больше %d.", index, maxIndex));
+        if (index < 0 || index >= upperBound) {
+            throw new IndexOutOfBoundsException(String.format("Передан индекс %d. Индекс должен быть не меньше 0 и не больше %d.", index, upperBound - 1));
         }
     }
 
@@ -137,7 +137,11 @@ public class ArrayList<E> implements List<E> {
     }
 
     private void increaseCapacity() {
-        items = Arrays.copyOf(items, items.length == 0 ? 1 : items.length * 2);
+        if (items.length == 0) {
+            return;
+        }
+
+        items = Arrays.copyOf(items, items.length * 2);
     }
 
     @Override
@@ -193,7 +197,7 @@ public class ArrayList<E> implements List<E> {
             i++;
         }
 
-        return false;
+        return true;
     }
 
     @Override
@@ -232,10 +236,11 @@ public class ArrayList<E> implements List<E> {
             return;
         }
 
-        Arrays.fill(items, null);
+        for (int i = 0; i < size; i++) {
+            items[i] = null;
+        }
 
         modCount++;
-        size = 0;
     }
 
     @Override
