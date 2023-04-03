@@ -47,18 +47,18 @@ public class SinglyLinkedList<T> {
         return head.getData();
     }
 
-    private void checkIndex(int index, boolean isUpperBoundIncluded) {
-        int maxIndex = isUpperBoundIncluded ? count + 1 : count;
+    private void checkIndex(int index, boolean includeUpperBound) {
+        int upperBound = includeUpperBound ? count + 1 : count;
 
-        if (index < 0 || index > maxIndex) {
-            throw new IndexOutOfBoundsException(String.format("Передан индекс %d. Индекс должен быть не меньше 0 и не больше %d.", index, maxIndex));
+        if (index < 0 || index >= upperBound) {
+            throw new IndexOutOfBoundsException(String.format("Передан индекс %d. Индекс должен быть не меньше 0 и не больше %d.", index, upperBound - 1));
         }
     }
 
     private ListItem<T> getItemByIndex(int index) {
         ListItem<T> listItem = head;
 
-        for (int i = 0; i < count && i != index; i++) {
+        for (int i = 0; i < index; i++) {
             listItem = listItem.getNext();
         }
 
@@ -183,12 +183,12 @@ public class SinglyLinkedList<T> {
         }
 
         copy.head = new ListItem<>(head.getData());
-        ListItem<T> previousItem = copy.head;
+        ListItem<T> previousItemCopy = copy.head;
 
         for (ListItem<T> item = head.getNext(); item != null; item = item.getNext()) {
             ListItem<T> copyItem = new ListItem<>(item.getData());
-            previousItem.setNext(copyItem);
-            previousItem = copyItem;
+            previousItemCopy.setNext(copyItem);
+            previousItemCopy = copyItem;
         }
 
         copy.count = count;

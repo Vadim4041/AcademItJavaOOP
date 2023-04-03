@@ -1,4 +1,4 @@
-package ru.academits.kozhevnikov.main;
+package ru.academits.kozhevnikov.list_main;
 
 import ru.academits.kozhevnikov.list.SinglyLinkedList;
 
