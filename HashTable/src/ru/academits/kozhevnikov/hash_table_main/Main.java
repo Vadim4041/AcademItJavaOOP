@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         HashTable<Integer> hashTable = new HashTable<>();
         hashTable.add(15);
+        hashTable.add(15);
         hashTable.add(2);
         hashTable.add(45);
         hashTable.add(16);
@@ -27,6 +28,12 @@ public class Main {
 
         System.out.println("Хэш-таблица после удаления элементов, не содержащихся в списке:");
         System.out.println(hashTable.retainAll(List.of(1, 2, 15, 3)));
+        System.out.println(hashTable);
+
+        System.out.println();
+
+        System.out.println("Хэш-таблица после удаления элементов, содержащихся в списке:");
+        hashTable.removeAll(List.of(3, 15));
         System.out.println(hashTable);
 
         System.out.println();

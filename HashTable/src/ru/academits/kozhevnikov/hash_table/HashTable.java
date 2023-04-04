@@ -48,30 +48,30 @@ public class HashTable<E> implements Collection<E> {
         return size == 0;
     }
 
-    private int getItemIndex(Object o) {
+    private int getIndex(Object o) {
         return o == null ? 0 : Math.abs(o.hashCode() % lists.length);
     }
 
     @Override
     public boolean contains(Object o) {
-        int index = getItemIndex(o);
+        int index = getIndex(o);
 
         return lists[index] != null && lists[index].contains(o);
     }
 
     @Override
-    public boolean add(E element) {
-        int index = getItemIndex(element);
+    public boolean add(E item) {
+        int index = getIndex(item);
 
         if (lists[index] == null) {
             lists[index] = new ArrayList<>();
         }
 
-        lists[index].add(element);
+        lists[index].add(item);
         size++;
         modCount++;
 
-        return false;
+        return true;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class HashTable<E> implements Collection<E> {
             return false;
         }
 
-        int index = getItemIndex(o);
+        int index = getIndex(o);
 
         if (lists[index] != null && lists[index].remove(o)) {
             size--;
@@ -113,8 +113,16 @@ public class HashTable<E> implements Collection<E> {
 
         int initialSize = size;
 
-        for (Object e : c) {
-            remove(e);
+        for (ArrayList<E> list : lists) {
+            if (list != null) {
+                size -= list.size();
+                list.removeAll(c);
+                size += list.size();
+            }
+        }
+
+        if (initialSize != size) {
+            modCount++;
         }
 
         return size != initialSize;
@@ -144,9 +152,10 @@ public class HashTable<E> implements Collection<E> {
 
             if (list.retainAll(c)) {
                 size -= listInitialSize - list.size();
-                modCount++;
             }
         }
+
+        modCount++;
 
         return initialSize != size;
     }
@@ -224,7 +233,7 @@ public class HashTable<E> implements Collection<E> {
     @Override
     public <T> T[] toArray(T[] a) {
         if (a.length < size) {
-            // noinspection unchecked
+            //noinspection unchecked
             return (T[]) Arrays.copyOf(toArray(), size, a.getClass());
         }
 
