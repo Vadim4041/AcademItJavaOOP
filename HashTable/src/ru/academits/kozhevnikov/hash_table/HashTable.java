@@ -142,7 +142,7 @@ public class HashTable<E> implements Collection<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         if (c.isEmpty()) {
-            return false;
+            throw new NullPointerException("Передана пустая коллекция.");
         }
 
         int initialSize = size;
