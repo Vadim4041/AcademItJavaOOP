@@ -54,19 +54,17 @@ public class LambdasTask1 {
         final int ADULT_AGE = 18;
 
         List<Person> underagePeople = peopleList.stream()
-                .filter(g -> g.age() < ADULT_AGE)
+                .filter(p -> p.age() < ADULT_AGE)
                 .toList();
 
         System.out.println("Underage people:");
         underagePeople.forEach(System.out::println);
 
-        double underagePeopleAverageAge = underagePeople.stream().collect(Collectors.averagingInt(Person::age));
-
         underagePeople.stream()
                 .mapToInt(Person::age)
                 .average()
                 .ifPresentOrElse(
-                        value -> System.out.println("Average age of underage people: " + underagePeopleAverageAge),
+                        value -> System.out.println("Average age of underage people: " + underagePeople.stream().collect(Collectors.averagingInt(Person::age))),
                         () -> System.out.println("There are no underage people")
                 );
 
