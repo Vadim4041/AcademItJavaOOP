@@ -1,4 +1,4 @@
 package ru.academits.kozhevnikov.person;
 
-public record Person(int age, String name) {
+public record Person(String name, int age) {
 }

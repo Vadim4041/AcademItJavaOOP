@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
 public class LambdasTask1 {
     public static void main(String[] args) {
         List<Person> peopleList = Arrays.asList(
-                new Person(17, "Oleg"),
-                new Person(25, "Irina"),
-                new Person(58, "Sergey"),
-                new Person(15, "Alexandr"),
-                new Person(10, "Artem"),
-                new Person(45, "Vasiliy"),
-                new Person(28, "Vasiliy")
+                new Person("Oleg", 17),
+                new Person("Irina", 25),
+                new Person("Sergey", 58),
+                new Person("Alexandr", 15),
+                new Person("Artem", 10),
+                new Person("Vasiliy", 45),
+                new Person("Vasiliy", 28)
         );
 
         System.out.println("People list:");
@@ -40,14 +40,13 @@ public class LambdasTask1 {
         System.out.println();
 
         // Задача А
-        List<String> distinctNamesList = peopleList.stream()
+        List<String> uniqueNamesList = peopleList.stream()
                 .map(Person::name)
                 .distinct()
                 .toList();
 
         // Задача Б
-        System.out.println(distinctNamesList.stream()
-                .collect(Collectors.joining(", ", "Names: ", ".")));
+        System.out.println(uniqueNamesList.stream().collect(Collectors.joining(", ", "Names: ", ".")));
 
         System.out.println();
 
@@ -61,32 +60,39 @@ public class LambdasTask1 {
         System.out.println("Underage people:");
         underagePeople.forEach(System.out::println);
 
-        double underagePeopleAverageAge = underagePeople.stream()
-                .collect(Collectors.averagingDouble(Person::age));
+        double underagePeopleAverageAge = underagePeople.stream().collect(Collectors.averagingInt(Person::age));
+
+        underagePeople.stream()
+                .mapToInt(Person::age)
+                .average()
+                .ifPresentOrElse(
+                        value -> System.out.println("Average age of underage people: " + underagePeopleAverageAge),
+                        () -> System.out.println("There are no underage people")
+                );
 
         System.out.println("Average age of underage people: " + underagePeopleAverageAge);
 
         System.out.println();
 
         // Задача Г
-        Map<String, Double> averageAgeByNames = peopleList.stream()
+        Map<String, Double> averageAgesByNames = peopleList.stream()
                 .collect(Collectors.groupingBy(
                         Person::name,
                         Collectors.averagingInt(Person::age))
                 );
 
         System.out.println("Average age of people with following names:");
-        averageAgeByNames.forEach((name, age) -> System.out.printf("%s: %.2f%n", name, age));
+        averageAgesByNames.forEach((name, age) -> System.out.printf("%s: %.2f%n", name, age));
 
         System.out.println();
 
-        // Задача Г
+        // Задача Д
         final int UPPER_LIMIT = 45;
         final int LOWER_LIMIT = 20;
 
         List<String> peopleNamesList = peopleList.stream()
                 .filter(p -> p.age() >= LOWER_LIMIT && p.age() <= UPPER_LIMIT)
-                .sorted((p1, p2) -> (p2.age() - p1.age()))
+                .sorted((p1, p2) -> p2.age() - p1.age())
                 .map(Person::name)
                 .toList();
 
