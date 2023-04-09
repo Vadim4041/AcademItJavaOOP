@@ -64,7 +64,7 @@ public class LambdasTask1 {
                 .mapToInt(Person::age)
                 .average()
                 .ifPresentOrElse(
-                        value -> System.out.println("Average age of underage people: " + underagePeople.stream().collect(Collectors.averagingInt(Person::age))),
+                        age -> System.out.println("Average age of underage people: " + age),
                         () -> System.out.println("There are no underage people")
                 );
 
