@@ -141,21 +141,23 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
+        if (c.isEmpty()) {
+            return false;
+        }
+
         int initialSize = size;
 
         for (ArrayList<E> list : lists) {
-            if (list == null || list.isEmpty()) {
-                continue;
-            }
-
-            int listInitialSize = list.size();
-
-            if (list.retainAll(c)) {
-                size -= listInitialSize - list.size();
+            if (list != null) {
+                size -= list.size();
+                list.retainAll(c);
+                size += list.size();
             }
         }
 
-        modCount++;
+        if (initialSize != size) {
+            modCount++;
+        }
 
         return initialSize != size;
     }
