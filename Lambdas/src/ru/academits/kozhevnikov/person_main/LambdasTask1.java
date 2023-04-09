@@ -70,8 +70,6 @@ public class LambdasTask1 {
                         () -> System.out.println("There are no underage people")
                 );
 
-        System.out.println("Average age of underage people: " + underagePeopleAverageAge);
-
         System.out.println();
 
         // Задача Г
