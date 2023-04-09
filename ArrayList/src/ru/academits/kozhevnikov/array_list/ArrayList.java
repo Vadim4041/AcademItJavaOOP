@@ -46,7 +46,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public String toString() {
-        if (isEmpty()) {
+        if (size == 0) {
             return "[]";
         }
 
@@ -235,7 +235,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public void clear() {
-        if (isEmpty()) {
+        if (size == 0) {
             return;
         }
 
@@ -302,7 +302,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        if (isEmpty()) {
+        if (size == 0) {
             return false;
         }
 
