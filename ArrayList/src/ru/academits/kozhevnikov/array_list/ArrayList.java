@@ -46,7 +46,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public String toString() {
-        if (size == 0) {
+        if (isEmpty()) {
             return "[]";
         }
 
@@ -140,6 +140,8 @@ public class ArrayList<E> implements List<E> {
         if (items.length == 0) {
             //noinspection unchecked
             items = (E[]) new Object[DEFAULT_CAPACITY];
+
+            return;
         }
 
         items = Arrays.copyOf(items, items.length * 2);
@@ -233,14 +235,13 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public void clear() {
-        if (size == 0) {
+        if (isEmpty()) {
             return;
         }
 
-        for (int i = 0; i < size; i++) {
-            items[i] = null;
-        }
+        Arrays.fill(items, 0, size, null);
 
+        size = 0;
         modCount++;
     }
 
@@ -301,7 +302,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        if (size == 0) {
+        if (isEmpty()) {
             return false;
         }
 
