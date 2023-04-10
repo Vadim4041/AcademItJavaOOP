@@ -141,8 +141,6 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        Objects.requireNonNull(c, "Вместо коллекции передан null.");
-
         int initialSize = size;
 
         for (ArrayList<E> list : lists) {
