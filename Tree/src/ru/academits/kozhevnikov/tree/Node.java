@@ -1,16 +1,16 @@
 package ru.academits.kozhevnikov.tree;
 
-class Node<T extends Comparable<T>> {
-    private final T data;
+class Node<T> {
+    private final T value;
     private Node<T> left;
     private Node<T> right;
 
     public Node(T value) {
-        this.data = value;
+        this.value = value;
     }
 
-    public T getData() {
-        return data;
+    public T getValue() {
+        return value;
     }
 
     public Node<T> getLeft() {

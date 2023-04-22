@@ -41,6 +41,6 @@ public class Main {
         // Remove a node from the tree
         System.out.print("Breadth-first traversal after deleting node 6: ");
         tree.remove(6);
-        tree.traverseBreadthFirst(node -> System.out.print(node + " ")); // 8 3 10 1 6 14 4 7 13
+        tree.traverseBreadthFirst(node -> System.out.print(node + " ")); // 8 3 10 1 7 14 4 13
     }
 }

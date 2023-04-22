@@ -3,7 +3,7 @@ package ru.academits.kozhevnikov.tree;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class BinarySearchTree<T extends Comparable<T>> {
+public class BinarySearchTree<T> {
     private Node<T> root;
     private Comparator<T> comparator;
     private int size;
@@ -16,11 +16,24 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     private int compare(T value1, T value2) {
-        if (comparator != null) {
-            return comparator.compare(value1, value2);
+        if (comparator == null) {
+            if (value1 != null && value2 != null) {
+                //noinspection unchecked
+                return ((Comparable<T>) value1).compareTo(value2);
+            }
+
+            if (value1 == null && value2 == null) {
+                return 0;
+            }
+
+            if (value1 == null) {
+                return -1;
+            }
+
+            return 1;
         }
 
-        return value1.compareTo(value2);
+        return comparator.compare(value1, value2);
     }
 
     public void insert(T value) {
@@ -35,7 +48,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         while (true) {
             // value is less than the current node
-            if (compare(value, currentNode.getData()) < 0) {
+            if (compare(value, currentNode.getValue()) < 0) {
                 if (currentNode.getLeft() == null) {
                     currentNode.setLeft(new Node<>(value));
                     size++;
@@ -60,7 +73,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
 
-    public boolean contains(T data) {
+    public boolean contains(T value) {
         if (size == 0) {
             return false;
         }
@@ -68,7 +81,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         Node<T> currentNode = root;
 
         while (currentNode != null) {
-            int comparisonResult = compare(data, currentNode.getData());
+            int comparisonResult = compare(value, currentNode.getValue());
 
             if (comparisonResult == 0) {
                 return true;
@@ -98,20 +111,24 @@ public class BinarySearchTree<T extends Comparable<T>> {
         boolean isLeftChild = false;
 
         // Search for the node to be removed
-        while (currentNode != null && !currentNode.getData().equals(value)) {
+        int comparisonResult = compare(value, currentNode.getValue());
+
+        while (comparisonResult != 0) {
             parentNode = currentNode;
 
-            if (compare(value, currentNode.getData()) < 0) {
+            if (comparisonResult < 0) {
                 currentNode = currentNode.getLeft();
                 isLeftChild = true;
             } else {
                 currentNode = currentNode.getRight();
                 isLeftChild = false;
             }
-        }
 
-        if (currentNode == null) {
-            return false; // Node not found
+            if (currentNode == null) {
+                return false; // Node not found
+            }
+
+            comparisonResult = compare(value, currentNode.getValue());
         }
 
         // Case 1: Node has no children
@@ -125,7 +142,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
                 parentNode.setRight(null); // Node is right child, set parent's right to null
             }
         }
-
         // Case 2: Node has one child
         else if (currentNode.getLeft() == null) {
             if (currentNode == root) {
@@ -147,64 +163,47 @@ public class BinarySearchTree<T extends Comparable<T>> {
                 parentNode.setRight(currentNode.getLeft()); // Node is right child, set parent's right to left child
             }
         }
-
         // Case 3: Node has two children
         else {
-            Node<T> successor = getSuccessor(currentNode);
+            Node<T> leftmostNodeInRightSubtreeParent = currentNode;
+            Node<T> leftmostNodeInRightSubtree = currentNode.getRight();
 
-            if (currentNode == root) {
-                root = successor; // Node is root, set root to successor
-            } else if (isLeftChild) {
-                parentNode.setLeft(successor); // Node is left child, set parent's left to successor
-            } else {
-                assert parentNode != null;
-                parentNode.setRight(successor); // Node is right child, set parent's right to successor
+            while (leftmostNodeInRightSubtree.getLeft() != null) {
+                leftmostNodeInRightSubtreeParent = leftmostNodeInRightSubtree;
+                leftmostNodeInRightSubtree = leftmostNodeInRightSubtree.getLeft();
             }
 
-            successor.setLeft(currentNode.getLeft()); // Set successor's left to current's left
+            if (leftmostNodeInRightSubtree.getRight() == null) {
+                // Check if right subtree has one node and delete it
+                if (currentNode.getRight() == leftmostNodeInRightSubtree) {
+                    leftmostNodeInRightSubtreeParent.setRight(null);
+                } else {
+                    leftmostNodeInRightSubtreeParent.setLeft(null);
+                }
+            } else {
+                // If the leftmost node has the right child then link node's parent and successor
+                leftmostNodeInRightSubtreeParent.setLeft(leftmostNodeInRightSubtree.getRight());
+                leftmostNodeInRightSubtree.setRight(null);
+            }
+
+            if (currentNode == root) {
+                root = leftmostNodeInRightSubtree; // Node is root, set root to leftmostNodeInRightSubtree
+            } else if (isLeftChild) {
+                parentNode.setLeft(leftmostNodeInRightSubtree); // Node is left child, set parent's left to leftmostNodeInRightSubtree
+            } else {
+                assert parentNode != null;
+                parentNode.setRight(leftmostNodeInRightSubtree); // Node is right child, set parent's right to leftmostNodeInRightSubtree
+            }
+
+            leftmostNodeInRightSubtree.setLeft(currentNode.getLeft()); // Set leftmostNodeInRightSubtree's left to current's left
+            leftmostNodeInRightSubtree.setRight(currentNode.getRight()); // Set leftmostNodeInRightSubtree's right to current's right
         }
 
         size--; // Decrease size of tree
         return true; // Node successfully removed
     }
 
-    private Node<T> getSuccessor(Node<T> node) {
-        if (node == null) {
-            return null;
-        }
-
-        // If the node has a right subtree, the successor will be the leftmost
-        // node in the right subtree.
-        if (node.getRight() != null) {
-            Node<T> currentNode = node.getRight();
-
-            while (currentNode.getLeft() != null) {
-                currentNode = currentNode.getLeft();
-            }
-
-            return currentNode;
-        }
-
-        // If the node does not have a right subtree, the successor will be
-        // the first ancestor that is greater than the node's value.
-        Node<T> successor = null;
-        Node<T> ancestor = root;
-
-        while (ancestor != null && !ancestor.equals(node)) {
-            int comparisonResult = compare(node.getData(), ancestor.getData());
-
-            if (comparisonResult < 0) {
-                successor = ancestor;
-                ancestor = ancestor.getLeft();
-            } else {
-                ancestor = ancestor.getRight();
-            }
-        }
-
-        return successor;
-    }
-
-    public void traverseBreadthFirst(Consumer<T> action) {
+    public void traverseBreadthFirst(Consumer<T> consumer) {
         if (root == null) {
             return;
         }
@@ -214,7 +213,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         while (!queue.isEmpty()) {
             Node<T> node = queue.poll();
-            action.accept(node.getData());
+            consumer.accept(node.getValue());
 
             if (node.getLeft() != null) {
                 queue.add(node.getLeft());
@@ -226,17 +225,17 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
     }
 
-    public void traverseDepthFirst(Consumer<T> action) {
+    public void traverseDepthFirst(Consumer<T> consumer) {
         if (root == null) {
             return;
         }
 
-        Deque<Node<T>> stack = new ArrayDeque<>();
+        Deque<Node<T>> stack = new LinkedList<>();
         stack.push(root);
 
         while (!stack.isEmpty()) {
             Node<T> currentNode = stack.pop();
-            action.accept(currentNode.getData());
+            consumer.accept(currentNode.getValue());
 
             if (currentNode.getRight() != null) {
                 stack.push(currentNode.getRight());
@@ -248,60 +247,18 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
     }
 
-    public void traverseDepthFirstRecursive(Consumer<T> action) {
-        traverseDepthFirstRecursive(root, action);
+    public void traverseDepthFirstRecursive(Consumer<T> consumer) {
+        traverseDepthFirstRecursive(root, consumer);
     }
 
-    private void traverseDepthFirstRecursive(Node<T> node, Consumer<T> action) {
+    private void traverseDepthFirstRecursive(Node<T> node, Consumer<T> consumer) {
         if (node == null) {
             return;
         }
 
-        action.accept(node.getData());
+        consumer.accept(node.getValue());
 
-        traverseDepthFirstRecursive(node.getLeft(), action);
-        traverseDepthFirstRecursive(node.getRight(), action);
+        traverseDepthFirstRecursive(node.getLeft(), consumer);
+        traverseDepthFirstRecursive(node.getRight(), consumer);
     }
-
-
-
-/*
-
-    public void traverseDepthFirstRecursive() {
-        // implementation to be added
-    }
-
-    public void traverseDepthFirstNonRecursive() {
-        // implementation to be added
-    }
-
-    private void insertRecursive(Node<T> current, T data) {
-        // implementation to be added
-    }
-
-    private Node<T> findNodeRecursive(Node<T> current, T data) {
-        // implementation to be added
-    }
-
-    private Node<T> findMinimumNode(Node<T> node) {
-        // implementation to be added
-    }
-
-    private Node<T> removeNodeRecursive(Node<T> current, T data) {
-        // implementation to be added
-    }
-
-    private void traverseBreadthFirst(Node<T> root) {
-        // implementation to be added
-    }
-
-    private void traverseDepthFirstRecursive(Node<T> current) {
-        // implementation to be added
-    }
-
-    private void traverseInOrderNonRecursive(Node<T> root) {
-        // implementation to be added
-    }
-
- */
 }
