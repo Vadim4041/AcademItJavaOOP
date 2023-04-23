@@ -1,5 +1,6 @@
 package ru.academits.kozhevnikov.graph;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.IntConsumer;
@@ -56,6 +57,33 @@ public class Graph {
         }
     }
 
+    public void traverseDepthFirst(IntConsumer consumer) {
+        boolean[] visited = new boolean[verticesCount];
+        Deque<Integer> stack = new LinkedList<>();
+
+        for (int i = 0; i < verticesCount; i++) {
+            if (!visited[i]) {
+                stack.push(i);
+
+                while (!stack.isEmpty()) {
+                    int vertex = stack.pop();
+
+                    if (!visited[vertex]) {
+                        visited[vertex] = true;
+                        consumer.accept(vertex);
+
+                        for (int j = verticesCount - 1; j >= 0; j--) {
+                            if (adjacencyMatrix[vertex][j] != 0 && !visited[j]) {
+                                stack.push(j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     public void traverseDepthFirstRecursively(IntConsumer consumer) {
         boolean[] visited = new boolean[verticesCount];
 
@@ -73,37 +101,6 @@ public class Graph {
         for (int i = 0; i < verticesCount; i++) {
             if (adjacencyMatrix[vertex][i] == 1 && !visited[i]) {
                 traverseDepthFirstRecursively(i, visited, consumer);
-            }
-        }
-    }
-
-    public void traverseDepthFirst(IntConsumer consumer) {
-        boolean[] visited = new boolean[verticesCount];
-        for (int i = 0; i < verticesCount; i++) {
-            if (!visited[i]) {
-                traverseDepthFirst(i, visited, consumer);
-            }
-        }
-    }
-
-    private void traverseDepthFirst(int startVertex, boolean[] visited, IntConsumer consumer) {
-        visited[startVertex] = true;
-        consumer.accept(startVertex);
-        int[] stack = new int[verticesCount];
-        int top = 0;
-        stack[top] = startVertex;
-
-        while (top >= 0) {
-            int vertex = stack[top];
-            top--;
-
-            for (int i = verticesCount - 1; i >= 0; i--) {
-                if (adjacencyMatrix[vertex][i] == 1 && !visited[i]) {
-                    visited[i] = true;
-                    consumer.accept(i);
-                    top++;
-                    stack[top] = i;
-                }
             }
         }
     }
