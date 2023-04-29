@@ -73,7 +73,7 @@ public class Graph {
                         consumer.accept(vertex);
 
                         for (int j = verticesCount - 1; j >= 0; j--) {
-                            if (adjacencyMatrix[vertex][j] != 0 && !visited[j]) {
+                            if (adjacencyMatrix[vertex][j] == 1 && !visited[j]) {
                                 stack.push(j);
                             }
                         }
@@ -82,7 +82,6 @@ public class Graph {
             }
         }
     }
-
 
     public void traverseDepthFirstRecursively(IntConsumer consumer) {
         boolean[] visited = new boolean[verticesCount];
