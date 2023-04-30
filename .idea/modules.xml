@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/Lambdas/Lambdas.iml" filepath="$PROJECT_DIR$/Lambdas/Lambdas.iml" />
       <module fileurl="file://$PROJECT_DIR$/List/List.iml" filepath="$PROJECT_DIR$/List/List.iml" />
       <module fileurl="file://$PROJECT_DIR$/Matrix/Matrix.iml" filepath="$PROJECT_DIR$/Matrix/Matrix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Minesweeper/Minesweeper.iml" filepath="$PROJECT_DIR$/Minesweeper/Minesweeper.iml" />
       <module fileurl="file://$PROJECT_DIR$/Range/Range.iml" filepath="$PROJECT_DIR$/Range/Range.iml" />
       <module fileurl="file://$PROJECT_DIR$/Shapes/Shapes.iml" filepath="$PROJECT_DIR$/Shapes/Shapes.iml" />
       <module fileurl="file://$PROJECT_DIR$/Temperature/Temperature.iml" filepath="$PROJECT_DIR$/Temperature/Temperature.iml" />
