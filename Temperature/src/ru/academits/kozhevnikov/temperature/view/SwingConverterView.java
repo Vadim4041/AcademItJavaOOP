@@ -3,12 +3,9 @@ package ru.academits.kozhevnikov.temperature.view;
 import ru.academits.kozhevnikov.temperature.model.scales.Scale;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
 import static javax.swing.GroupLayout.Alignment.CENTER;
 
@@ -20,7 +17,7 @@ public class SwingConverterView implements ConverterView {
     private JTextField resultTextField;
     private ActionListener convertButtonListener;
 
-    public SwingConverterView(ArrayList<Scale> scales) {
+    public SwingConverterView(List<Scale> scales) {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

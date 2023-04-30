@@ -1,7 +1,6 @@
 package ru.academits.kozhevnikov.temperature.controller;
 
 import ru.academits.kozhevnikov.temperature.model.ScaleConverter;
-import ru.academits.kozhevnikov.temperature.model.TemperatureConverter;
 import ru.academits.kozhevnikov.temperature.view.ConverterView;
 
 import java.awt.event.ActionEvent;
@@ -11,17 +10,16 @@ public class Controller implements ActionListener {
     private final ConverterView view;
     private final ScaleConverter converter;
 
-    public Controller(TemperatureConverter converter, ConverterView view) {
+    public Controller(ScaleConverter converter, ConverterView view) {
         this.converter = converter;
         this.view = view;
         this.view.setConvertButtonListener(this);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.setConvertedTemperature(Math.round(
-                converter.convert(view.getTemperature(), view.getScaleFrom(), view.getScaleTo()))
+        view.setConvertedTemperature(
+                (double) Math.round(converter.convert(view.getTemperature(), view.getScaleFrom(), view.getScaleTo()) * 100) / 100
         );
     }
 }

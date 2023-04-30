@@ -1,14 +1,14 @@
 package ru.academits.kozhevnikov.temperature.model.scales;
 
-public class FahrenheitScale implements Scale{
+public class FahrenheitScale implements Scale {
     @Override
-    public double convertToKelvin(double temperature) {
-        return new CelsiusScale().convertToKelvin((temperature - 32) / 1.8);
+    public double convertToCelsius(double temperature) {
+        return (temperature - 32) / 1.8;
     }
 
     @Override
-    public double convertFromKelvin(double temperature) {
-        return new CelsiusScale().convertFromKelvin((temperature)) * 1.8 + 32;
+    public double convertFromCelsius(double temperature) {
+        return temperature * 1.8 + 32;
     }
 
     @Override

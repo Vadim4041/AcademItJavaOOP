@@ -1,16 +1,14 @@
 package ru.academits.kozhevnikov.temperature.model.scales;
 
 public class CelsiusScale implements Scale {
-    private static final double ABSOLUTE_ZERO_IN_CELSIUS = -273.15;
-
     @Override
-    public double convertToKelvin(double temperature) {
-        return temperature - ABSOLUTE_ZERO_IN_CELSIUS;
+    public double convertToCelsius(double temperature) {
+        return temperature;
     }
 
     @Override
-    public double convertFromKelvin(double temperature) {
-        return temperature + ABSOLUTE_ZERO_IN_CELSIUS;
+    public double convertFromCelsius(double temperature) {
+        return temperature;
     }
 
     @Override
