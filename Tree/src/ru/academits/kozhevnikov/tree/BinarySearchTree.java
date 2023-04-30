@@ -5,10 +5,11 @@ import java.util.function.Consumer;
 
 public class BinarySearchTree<T> {
     private Node<T> root;
-    private Comparator<T> comparator;
+    private final Comparator<T> comparator;
     private int size;
 
     public BinarySearchTree() {
+        comparator = null;
     }
 
     public BinarySearchTree(Comparator<T> comparator) {
@@ -16,24 +17,24 @@ public class BinarySearchTree<T> {
     }
 
     private int compare(T value1, T value2) {
-        if (comparator == null) {
-            if (value1 != null && value2 != null) {
-                //noinspection unchecked
-                return ((Comparable<T>) value1).compareTo(value2);
-            }
+        if (comparator != null) {
+            return comparator.compare(value1, value2);
+        }
 
-            if (value1 == null && value2 == null) {
-                return 0;
-            }
+        if (value1 == null && value2 == null) {
+            return 0;
+        }
 
-            if (value1 == null) {
-                return -1;
-            }
+        if (value1 == null) {
+            return -1;
+        }
 
+        if (value2 == null) {
             return 1;
         }
 
-        return comparator.compare(value1, value2);
+        //noinspection unchecked
+        return ((Comparable<T>) value1).compareTo(value2);
     }
 
     public void insert(T value) {
@@ -72,9 +73,8 @@ public class BinarySearchTree<T> {
         }
     }
 
-
     public boolean contains(T value) {
-        if (size == 0) {
+        if (root == null) {
             return false;
         }
 
@@ -108,7 +108,7 @@ public class BinarySearchTree<T> {
 
         Node<T> currentNode = root;
         Node<T> parentNode = null;
-        boolean isLeftChild = false;
+        boolean isLeftChild = true;
 
         // Search for the node to be removed
         int comparisonResult = compare(value, currentNode.getValue());
@@ -136,71 +136,75 @@ public class BinarySearchTree<T> {
             if (currentNode == root) {
                 root = null; // Node is root, set root to null
             } else if (isLeftChild) {
+                assert parentNode != null;
                 parentNode.setLeft(null); // Node is left child, set parent's left to null
             } else {
-                assert parentNode != null;
                 parentNode.setRight(null); // Node is right child, set parent's right to null
             }
+
+            size--;
+            return true;
         }
+
         // Case 2: Node has one child
-        else if (currentNode.getLeft() == null) {
+        if (currentNode.getLeft() == null) {
             if (currentNode == root) {
                 root = currentNode.getRight(); // Node is root, set root to right child
             } else if (isLeftChild) {
+                assert parentNode != null;
                 parentNode.setLeft(currentNode.getRight()); // Node is left child, set parent's left to right child
             } else {
-                assert parentNode != null;
                 parentNode.setRight(currentNode.getRight()); // Node is right child, set parent's right to right child
             }
-
         } else if (currentNode.getRight() == null) {
             if (currentNode == root) {
                 root = currentNode.getLeft(); // Node is root, set root to left child
             } else if (isLeftChild) {
+                assert parentNode != null;
                 parentNode.setLeft(currentNode.getLeft()); // Node is left child, set parent's left to left child
             } else {
-                assert parentNode != null;
                 parentNode.setRight(currentNode.getLeft()); // Node is right child, set parent's right to left child
             }
+
+            size--;
+            return true;
         }
+
         // Case 3: Node has two children
-        else {
-            Node<T> leftmostNodeInRightSubtreeParent = currentNode;
-            Node<T> leftmostNodeInRightSubtree = currentNode.getRight();
+        Node<T> leftmostNodeInRightSubtree = getLeftmostNodeInRightSubtree(currentNode);
 
-            while (leftmostNodeInRightSubtree.getLeft() != null) {
-                leftmostNodeInRightSubtreeParent = leftmostNodeInRightSubtree;
-                leftmostNodeInRightSubtree = leftmostNodeInRightSubtree.getLeft();
-            }
-
-            if (leftmostNodeInRightSubtree.getRight() == null) {
-                // Check if right subtree has one node and delete it
-                if (currentNode.getRight() == leftmostNodeInRightSubtree) {
-                    leftmostNodeInRightSubtreeParent.setRight(null);
-                } else {
-                    leftmostNodeInRightSubtreeParent.setLeft(null);
-                }
-            } else {
-                // If the leftmost node has the right child then link node's parent and successor
-                leftmostNodeInRightSubtreeParent.setLeft(leftmostNodeInRightSubtree.getRight());
-                leftmostNodeInRightSubtree.setRight(null);
-            }
-
-            if (currentNode == root) {
-                root = leftmostNodeInRightSubtree; // Node is root, set root to leftmostNodeInRightSubtree
-            } else if (isLeftChild) {
-                parentNode.setLeft(leftmostNodeInRightSubtree); // Node is left child, set parent's left to leftmostNodeInRightSubtree
-            } else {
-                assert parentNode != null;
-                parentNode.setRight(leftmostNodeInRightSubtree); // Node is right child, set parent's right to leftmostNodeInRightSubtree
-            }
-
-            leftmostNodeInRightSubtree.setLeft(currentNode.getLeft()); // Set leftmostNodeInRightSubtree's left to current's left
-            leftmostNodeInRightSubtree.setRight(currentNode.getRight()); // Set leftmostNodeInRightSubtree's right to current's right
+        if (currentNode == root) {
+            root = leftmostNodeInRightSubtree;
+        } else if (isLeftChild) {
+            assert parentNode != null;
+            parentNode.setLeft(leftmostNodeInRightSubtree);
+        } else {
+            parentNode.setRight(leftmostNodeInRightSubtree);
         }
 
-        size--; // Decrease size of tree
-        return true; // Node successfully removed
+        leftmostNodeInRightSubtree.setLeft(currentNode.getLeft());
+
+        size--;
+        return true;
+    }
+
+    private Node<T> getLeftmostNodeInRightSubtree(Node<T> node) {
+        Node<T> leftmostNodeInRightSubtreeParent = node;
+        Node<T> leftmostNodeInRightSubtree = node;
+        Node<T> currentNode = node.getRight();
+
+        while (currentNode != null) {
+            leftmostNodeInRightSubtreeParent = leftmostNodeInRightSubtree;
+            leftmostNodeInRightSubtree = currentNode;
+            currentNode = currentNode.getLeft();
+        }
+
+        if (leftmostNodeInRightSubtree != node.getRight()) {
+            leftmostNodeInRightSubtreeParent.setLeft(leftmostNodeInRightSubtree.getRight());
+            leftmostNodeInRightSubtree.setRight(node.getRight());
+        }
+
+        return leftmostNodeInRightSubtree;
     }
 
     public void traverseBreadthFirst(Consumer<T> consumer) {

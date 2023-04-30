@@ -16,31 +16,46 @@ public class Main {
         tree.insert(10);
         tree.insert(14);
         tree.insert(13);
+        tree.insert(15);
+        tree.insert(16);
+
+        /*
+        Tree markdown:
+                         8
+                       /   \
+                     3      10
+                   /  \        \
+                  1    6        14
+                      / \      /  \
+                     4   7    13  15
+                                    \
+                                     16
+         */
 
         // Find a node in the tree
         System.out.println("Find node with value 6: " + tree.contains(6)); // true
 
         // Get the total number of nodes in the tree
-        System.out.println("Total number of nodes: " + tree.getSize()); // 9
+        System.out.println("Total number of nodes: " + tree.getSize()); // 11
 
         // Traverse the tree breadth-first
         System.out.print("Breadth-first traversal: ");
-        tree.traverseBreadthFirst(node -> System.out.print(node + " ")); // 8 3 10 1 6 14 4 7 13
+        tree.traverseBreadthFirst(node -> System.out.print(node + " ")); // 8 3 10 1 6 14 4 7 13 15 16
         System.out.println();
 
         // Traverse the tree depth-first (non-recursive)
         System.out.print("Depth-first traversal (non-recursive): ");
-        tree.traverseDepthFirst(node -> System.out.print(node + " ")); // 8 3 1 6 4 7 10 14 13
+        tree.traverseDepthFirst(node -> System.out.print(node + " ")); // 8 3 1 6 4 7 10 14 13 15 16
         System.out.println();
 
         // Traverse the tree depth-first (recursive)
         System.out.print("Depth-first traversal (recursive): ");
-        tree.traverseDepthFirstRecursive(node -> System.out.print(node + " ")); // 8 3 1 6 4 7 10 14 13
+        tree.traverseDepthFirstRecursive(node -> System.out.print(node + " ")); // 8 3 1 6 4 7 10 14 13 15 16
         System.out.println();
 
         // Remove a node from the tree
-        System.out.print("Breadth-first traversal after deleting node 6: ");
-        tree.remove(6);
-        tree.traverseBreadthFirst(node -> System.out.print(node + " ")); // 8 3 10 1 7 14 4 13
+        System.out.print("Breadth-first traversal after deleting node 14: ");
+        tree.remove(14);
+        tree.traverseBreadthFirst(node -> System.out.print(node + " ")); // 8 3 10 1 6 15 4 7 13 16
     }
 }
