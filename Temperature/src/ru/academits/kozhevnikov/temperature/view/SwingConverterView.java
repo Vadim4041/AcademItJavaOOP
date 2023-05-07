@@ -27,8 +27,8 @@ public class SwingConverterView implements ConverterView {
             // set the main FRAME
             frame = new JFrame("Temperature converter");
             frame.setIconImage(new ImageIcon("Temperature/src/ru/academits/kozhevnikov/temperature/resources/TemperatureImage.png").getImage());
-            frame.setSize(400, 300);
-            frame.setMinimumSize(new Dimension(400, 300));
+            frame.setMinimumSize(new Dimension(300, 100));
+            frame.setResizable(false);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
