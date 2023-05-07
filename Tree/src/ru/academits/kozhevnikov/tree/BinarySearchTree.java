@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class BinarySearchTree<T> {
-    private Node<T> root;
     private final Comparator<T> comparator;
+    private Node<T> root;
     private int size;
 
     public BinarySearchTree() {
@@ -147,6 +147,7 @@ public class BinarySearchTree<T> {
         }
 
         // Case 2: Node has one child
+        // Node has only right child
         if (currentNode.getLeft() == null) {
             if (currentNode == root) {
                 root = currentNode.getRight(); // Node is root, set root to right child
@@ -156,7 +157,13 @@ public class BinarySearchTree<T> {
             } else {
                 parentNode.setRight(currentNode.getRight()); // Node is right child, set parent's right to right child
             }
-        } else if (currentNode.getRight() == null) {
+
+            size--;
+            return true;
+        }
+
+        // Node has only left child
+        if (currentNode.getRight() == null) {
             if (currentNode == root) {
                 root = currentNode.getLeft(); // Node is root, set root to left child
             } else if (isLeftChild) {
