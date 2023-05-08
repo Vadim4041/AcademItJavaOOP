@@ -19,8 +19,8 @@ public class Main {
                 new FahrenheitScale()
         );
 
-        TemperatureConverter converter = new TemperatureConverter();
-        ConverterView view = new SwingConverterView(scales);
+        TemperatureConverter converter = new TemperatureConverter(scales);
+        ConverterView view = new SwingConverterView(converter.scales());
         new Controller(converter, view);
     }
 }
